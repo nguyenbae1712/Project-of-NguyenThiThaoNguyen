@@ -1,0 +1,868 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DE3C3064-DE9D-4394-B531-C0DAFC92683E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ClinicManagement1</RootNamespace>
+    <AssemblyName>ClinicManagement1</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44315</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
+    <Compile Include="Controllers\LectureController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicModel1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClinicModel1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClinicModel1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClinicModel1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicModels.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClinicModels.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicModels.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicModels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClinicModels.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerOpinion.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Image.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Lecture.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetail.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductAdvertising.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>ClinicModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\css\all.css" />
+    <Content Include="Assets\css\animation.css" />
+    <Content Include="Assets\css\aos.css" />
+    <Content Include="Assets\css\blog.css" />
+    <Content Include="Assets\css\bootstrap.min.css" />
+    <Content Include="Assets\css\bootstrap\bootstrap-grid.css" />
+    <Content Include="Assets\css\bootstrap\bootstrap-reboot.css" />
+    <Content Include="Assets\css\bootstrap\bootstrap.css" />
+    <Content Include="Assets\css\header-footer.css" />
+    <Content Include="Assets\css\header.css" />
+    <Content Include="Assets\css\jquery-ui.css" />
+    <Content Include="Assets\css\magnific-popup.css" />
+    <Content Include="Assets\css\main.css" />
+    <Content Include="Assets\css\owl.carousel.min.css" />
+    <Content Include="Assets\css\owl.theme.default.min.css" />
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\css\Xemchitiet_nguoidung.css" />
+    <Content Include="Assets\fonts\icomoon\demo-files\demo.css" />
+    <Content Include="Assets\fonts\icomoon\demo-files\demo.js" />
+    <Content Include="Assets\fonts\icomoon\demo.html" />
+    <Content Include="Assets\fonts\icomoon\fonts\icomoon.svg" />
+    <Content Include="Assets\fonts\icomoon\Read Me.txt" />
+    <Content Include="Assets\fonts\icomoon\style.css" />
+    <Content Include="Assets\images\Acyvlovir.png" />
+    <Content Include="Assets\images\Ameflu.png" />
+    <Content Include="Assets\images\bg_1.jpg" />
+    <Content Include="Assets\images\bg_2.jpg" />
+    <Content Include="Assets\images\Cataflam.png" />
+    <Content Include="Assets\images\diclofen.png" />
+    <Content Include="Assets\images\dohuyetap.png" />
+    <Content Include="Assets\images\hero_1.jpg" />
+    <Content Include="Assets\images\matnamui.png" />
+    <Content Include="Assets\images\maydooxy.png" />
+    <Content Include="Assets\images\maytaooxy.png" />
+    <Content Include="Assets\images\maythooxy.png" />
+    <Content Include="Assets\images\ongnghe.png" />
+    <Content Include="Assets\images\person_1.jpg" />
+    <Content Include="Assets\images\person_2.jpg" />
+    <Content Include="Assets\images\person_3.jpg" />
+    <Content Include="Assets\images\person_4.jpg" />
+    <Content Include="Assets\images\person_5.jpg" />
+    <Content Include="Assets\images\shoe.png" />
+    <Content Include="Assets\images\suiC.png" />
+    <Content Include="Assets\images\vitaminH.png" />
+    <Content Include="Assets\images\wave.svg" />
+    <Content Include="Assets\images\women.jpg" />
+    <Content Include="Assets\img\1.jpg" />
+    <Content Include="Assets\img\2-1.jpg" />
+    <Content Include="Assets\img\3-1.jpg" />
+    <Content Include="Assets\img\about-1-1.jpg" />
+    <Content Include="Assets\img\blog-1-1-1.png" />
+    <Content Include="Assets\img\blog-1-2-1.png" />
+    <Content Include="Assets\img\blog-1-3-1.png" />
+    <Content Include="Assets\img\blog\blog-2-1.jpg" />
+    <Content Include="Assets\img\blog\blog-2-2.jpg" />
+    <Content Include="Assets\img\blog\blog-2-3.jpg" />
+    <Content Include="Assets\img\blog\insta-1-1.jpg" />
+    <Content Include="Assets\img\blog\insta-1-2.jpg" />
+    <Content Include="Assets\img\blog\insta-1-3.jpg" />
+    <Content Include="Assets\img\blog\insta-1-4.jpg" />
+    <Content Include="Assets\img\blog\insta-1-5.jpg" />
+    <Content Include="Assets\img\blog\insta-1-6.jpg" />
+    <Content Include="Assets\img\blog\insta-1-7.jpg" />
+    <Content Include="Assets\img\blog\insta-1-8.jpg" />
+    <Content Include="Assets\img\blog\insta-1-9.jpg" />
+    <Content Include="Assets\img\blog\pagetitlebg.jpg" />
+    <Content Include="Assets\img\blog\rp-1-1.png" />
+    <Content Include="Assets\img\blog\rp-1-2.png" />
+    <Content Include="Assets\img\blog\rp-1-3.png" />
+    <Content Include="Assets\img\blog\rp-1-4.png" />
+    <Content Include="Assets\img\footer-bg-2-1.jpg" />
+    <Content Include="Assets\img\footerlogo.png" />
+    <Content Include="Assets\img\fun-fact-bg-1-1.jpg" />
+    <Content Include="Assets\img\fun-fact-pulse.png" />
+    <Content Include="Assets\img\logo %281%29.png" />
+    <Content Include="Assets\img\products\hoodie_3_front-300x300.jpg" />
+    <Content Include="Assets\img\products\poster_5_up.jpg" />
+    <Content Include="Assets\img\products\shop-1-1.jpg" />
+    <Content Include="Assets\img\products\shop-1-2.jpg" />
+    <Content Include="Assets\img\products\shop-1-3.jpg" />
+    <Content Include="Assets\img\products\shop-1-4.jpg" />
+    <Content Include="Assets\img\products\shop-1-5.jpg" />
+    <Content Include="Assets\img\products\shop-1-6.jpg" />
+    <Content Include="Assets\img\products\shop-1-7.jpg" />
+    <Content Include="Assets\img\products\shop-1-8.jpg" />
+    <Content Include="Assets\img\products\T_1_front-300x300.jpg" />
+    <Content Include="Assets\img\products\T_2_front.jpg" />
+    <Content Include="Assets\img\products\T_4_front-300x300.jpg" />
+    <Content Include="Assets\img\products\T_5_front-300x300.jpg" />
+    <Content Include="Assets\img\products\T_6_front.jpg" />
+    <Content Include="Assets\img\products\T_7_front-300x300.jpg" />
+    <Content Include="Assets\img\sec-title-icon.png" />
+    <Content Include="Assets\img\service-1-1-1.jpg" />
+    <Content Include="Assets\img\service-1-2-1.jpg" />
+    <Content Include="Assets\img\service-1-3-1.jpg" />
+    <Content Include="Assets\img\service-1-4-1.jpg" />
+    <Content Include="Assets\img\subscribe-bg-1-1.jpg" />
+    <Content Include="Assets\img\tab-1-3.jpg" />
+    <Content Include="Assets\img\team-2-1-1.png" />
+    <Content Include="Assets\img\team-2-2-1.png" />
+    <Content Include="Assets\img\team-2-3-1.png" />
+    <Content Include="Assets\js\aos.js" />
+    <Content Include="Assets\js\bootstrap.min.js" />
+    <Content Include="Assets\js\effect.js" />
+    <Content Include="Assets\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\js\jquery-ui.js" />
+    <Content Include="Assets\js\jquery.magnific-popup.min.js" />
+    <Content Include="Assets\js\main.js" />
+    <Content Include="Assets\js\owl.carousel.min.js" />
+    <Content Include="Assets\js\popper.min.js" />
+    <Content Include="Assets\js\slick.min.js" />
+    <Content Include="Assets\login\css\register.css" />
+    <Content Include="Assets\login\img\image-1.png" />
+    <Content Include="Assets\login\img\image-2.png" />
+    <Content Include="Assets\login\login.html" />
+    <Content Include="Assets\login\register.html" />
+    <Content Include="Assets\webfonts\fa-brands-400.svg" />
+    <Content Include="Assets\webfonts\fa-regular-400.svg" />
+    <Content Include="Assets\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\ClinicModel1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ClinicModel1.edmx</DependentUpon>
+      <LastGenOutput>ClinicModel1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ClinicModel1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ClinicModel1.edmx</DependentUpon>
+      <LastGenOutput>ClinicModel1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ClinicModels.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ClinicModels.Context.cs</LastGenOutput>
+      <DependentUpon>ClinicModels.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ClinicModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ClinicModels.edmx</DependentUpon>
+      <LastGenOutput>ClinicModels.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\ClinicModels.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ClinicModels.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ClinicModels.edmx.diagram">
+      <DependentUpon>ClinicModels.edmx</DependentUpon>
+    </Content>
+    <Content Include="Assets\.git\COMMIT_EDITMSG" />
+    <Content Include="Assets\.git\config" />
+    <Content Include="Assets\.git\description" />
+    <Content Include="Assets\.git\HEAD" />
+    <Content Include="Assets\.git\hooks\applypatch-msg.sample" />
+    <Content Include="Assets\.git\hooks\commit-msg.sample" />
+    <Content Include="Assets\.git\hooks\fsmonitor-watchman.sample" />
+    <Content Include="Assets\.git\hooks\post-update.sample" />
+    <Content Include="Assets\.git\hooks\pre-applypatch.sample" />
+    <Content Include="Assets\.git\hooks\pre-commit.sample" />
+    <Content Include="Assets\.git\hooks\pre-merge-commit.sample" />
+    <Content Include="Assets\.git\hooks\pre-push.sample" />
+    <Content Include="Assets\.git\hooks\pre-rebase.sample" />
+    <Content Include="Assets\.git\hooks\pre-receive.sample" />
+    <Content Include="Assets\.git\hooks\prepare-commit-msg.sample" />
+    <Content Include="Assets\.git\hooks\update.sample" />
+    <Content Include="Assets\.git\index" />
+    <Content Include="Assets\.git\info\exclude" />
+    <Content Include="Assets\.git\logs\HEAD" />
+    <Content Include="Assets\.git\logs\refs\heads\master" />
+    <Content Include="Assets\.git\logs\refs\remotes\origin\master" />
+    <Content Include="Assets\.git\objects\00\c895f0f3fbb4b805d53213ee689fc0a38655f8" />
+    <Content Include="Assets\.git\objects\00\f36dffb6c1b2a8b38baa15628f0b080a4ae7e8" />
+    <Content Include="Assets\.git\objects\01\655e9a5212731038b8a99633a8a7ed73ecf6a1" />
+    <Content Include="Assets\.git\objects\02\1ced0cec8497f513b7ae2990c5419d024454b2" />
+    <Content Include="Assets\.git\objects\02\dba231c41a9c0405619535136b3091fd93c670" />
+    <Content Include="Assets\.git\objects\04\b8e12aaffcb43bd104cb05cbebebec0022d7c8" />
+    <Content Include="Assets\.git\objects\05\44f0d2a348a6aa65896cae1424b9df55ad6c1e" />
+    <Content Include="Assets\.git\objects\05\a9423409eeed75c28e04c842ef56a95670d1bc" />
+    <Content Include="Assets\.git\objects\06\376aa562e4a4f7240d021b0339540d48450765" />
+    <Content Include="Assets\.git\objects\06\ad6772fa4bddb4c46df06a026c4ca493ce01a8" />
+    <Content Include="Assets\.git\objects\08\13bf8f07b6992e0de06eb37dd01cee2e040e0d" />
+    <Content Include="Assets\.git\objects\08\8577b98e3f5adde5a0dab7018811cdc075261c" />
+    <Content Include="Assets\.git\objects\0a\c3e0c93f24aae812a15a603e137492ab82bf18" />
+    <Content Include="Assets\.git\objects\0b\3c1dcd8f87331b58c5f0d79eb80eec9b190f8e" />
+    <Content Include="Assets\.git\objects\0b\42ccf765bad0d88ae11728676f291a0a91243b" />
+    <Content Include="Assets\.git\objects\0b\70cce2f38a087ba21fa6c9550b890a3e088647" />
+    <Content Include="Assets\.git\objects\0d\5692baa933bb132cc8c80d9cfda05b8ed5a1b0" />
+    <Content Include="Assets\.git\objects\0d\b86ab1817adf0d51268e8e210ac4a20471654e" />
+    <Content Include="Assets\.git\objects\0f\6a8de1ed583888d396da99033cdfa3d60473cb" />
+    <Content Include="Assets\.git\objects\11\a977b7373dab15046354e1b27b88f29acdf44f" />
+    <Content Include="Assets\.git\objects\12\53ff732e6a8c43fe94bcd41539c25f160a3ac3" />
+    <Content Include="Assets\.git\objects\12\86ebfcf9038a8c0e1535f498a47c98407bb149" />
+    <Content Include="Assets\.git\objects\12\ff07111feb4c26b1285d48795bb3f263e4f0ff" />
+    <Content Include="Assets\.git\objects\16\9860eacb3ab2aa910549f5d5952cd58db86afc" />
+    <Content Include="Assets\.git\objects\16\d4469b02add8bc87a91e4eaa69983864500c00" />
+    <Content Include="Assets\.git\objects\17\5080a076d3c75d3929436884c1ebb2cc1aed6d" />
+    <Content Include="Assets\.git\objects\17\efef39b9cbb215ad803f2df92817b9a2d1a3bf" />
+    <Content Include="Assets\.git\objects\18\cb07c3bf22aa8cc01f1ab3aa8f36e9e38a7b62" />
+    <Content Include="Assets\.git\objects\18\eaaae293c608673571e90e46acaa3d32287be3" />
+    <Content Include="Assets\.git\objects\19\2f847e17e08cebb04fb1f5a62d75213a9ad168" />
+    <Content Include="Assets\.git\objects\1b\e893a9b99e6115a1eeca231e24b6d2efe52b5d" />
+    <Content Include="Assets\.git\objects\1d\84a84547edb6a637588217839e8bc2259ae2a9" />
+    <Content Include="Assets\.git\objects\1d\f9487358210354b8a12558056daa0b2be59ae8" />
+    <Content Include="Assets\.git\objects\1e\aa8eb7c00c5dedec93ad5a8c96ed7f70a8b885" />
+    <Content Include="Assets\.git\objects\1e\ce042ac23a93193597167153b7373b7ff28e62" />
+    <Content Include="Assets\.git\objects\1f\18b2f3f36483973876a382d6e1bdc1f346361a" />
+    <Content Include="Assets\.git\objects\1f\896355e52f1619e6be53d49f7fc884567cd8cc" />
+    <Content Include="Assets\.git\objects\20\24febcfa82ffa56efb6a3c26255613da03d211" />
+    <Content Include="Assets\.git\objects\20\aeeb5f3e7586bba0fe69bff02057b15b2309f3" />
+    <Content Include="Assets\.git\objects\20\d35202af5cfdfcc2aa3c6a5d8edaf44dd09e73" />
+    <Content Include="Assets\.git\objects\21\c1fa42f91944708a358e3f42bf250da2cf7966" />
+    <Content Include="Assets\.git\objects\25\185626698393b1365199f93aadd8d3350dc9d5" />
+    <Content Include="Assets\.git\objects\27\042885b7872e5a5a7b1031e3e02f393afad13d" />
+    <Content Include="Assets\.git\objects\28\ad1fc3e4ee237898e5ba1084b23be509488e7c" />
+    <Content Include="Assets\.git\objects\28\d7e624474c54deed9251445f3e2b7c0273e713" />
+    <Content Include="Assets\.git\objects\29\84983bb2ce73071aa66be3eb5ce430e1aacc64" />
+    <Content Include="Assets\.git\objects\29\d5abe6618a9961209d9dc14d4779d66dd96b8b" />
+    <Content Include="Assets\.git\objects\2b\ce02f63140fa5d793e1d0b64b93eece69f5c64" />
+    <Content Include="Assets\.git\objects\2d\37d780aeec9be7cb3cabdf00c3efd6be5e2273" />
+    <Content Include="Assets\.git\objects\2d\a53dadace83141b84a1512db256839ea26ca60" />
+    <Content Include="Assets\.git\objects\2e\72e872c61b8a0b541de0a009ffeb8f538cbf5a" />
+    <Content Include="Assets\.git\objects\2e\d5f330402a600099bce3956564f61f8a77530d" />
+    <Content Include="Assets\.git\objects\30\1c43e64eb1996ade9d5f80a71dfaee7e5396db" />
+    <Content Include="Assets\.git\objects\30\f6366ef134fc752d2173f11629be65a7690e69" />
+    <Content Include="Assets\.git\objects\34\087aeceec95de0ba48c783a4f25a8d02355959" />
+    <Content Include="Assets\.git\objects\35\04bb1aa5d7aa2c3d75aedd4a03916afaa7e4d9" />
+    <Content Include="Assets\.git\objects\35\2a9b2355298234a9a5e7b158e95617e7476968" />
+    <Content Include="Assets\.git\objects\38\996f2c4523bc7fa8d905a30ba49d19ebbff078" />
+    <Content Include="Assets\.git\objects\3a\61878694b6a593bed20ec3c0e2e02bda12eb43" />
+    <Content Include="Assets\.git\objects\3d\4266e0d087794f655ecceb7a367859a1ac513a" />
+    <Content Include="Assets\.git\objects\3e\4e5ea2656461ff82c12cff504f18a2f8f1396f" />
+    <Content Include="Assets\.git\objects\3e\d0837aeae627422192e285c9af10d6b8585309" />
+    <Content Include="Assets\.git\objects\3e\f5f628bdec02858d22a7d732459f58ae7c1e50" />
+    <Content Include="Assets\.git\objects\40\1b7f7b32198727a02e58bcb59e0b264113dee4" />
+    <Content Include="Assets\.git\objects\42\172c2f6ed2f683fe898bdc4291b323ef563312" />
+    <Content Include="Assets\.git\objects\42\8a38299a675a3c81ca45627f7a6387cc672ad2" />
+    <Content Include="Assets\.git\objects\42\b92e9efe53dff6f652d17d0c3c06e5844639e8" />
+    <Content Include="Assets\.git\objects\43\3db6da38327db2f481185c4051949985fff2cf" />
+    <Content Include="Assets\.git\objects\44\3989d5b802e076294a153555eb5b3cd27cf505" />
+    <Content Include="Assets\.git\objects\48\fa8b6d59e3d4f8c31dd48d22a29572e61ce699" />
+    <Content Include="Assets\.git\objects\49\4439d2b45fd21205a9cc4880dc83501c63d5f3" />
+    <Content Include="Assets\.git\objects\49\d1fcfbe21c48a65f5037ab83172fa6dd03ba30" />
+    <Content Include="Assets\.git\objects\4b\825dc642cb6eb9a060e54bf8d69288fbee4904" />
+    <Content Include="Assets\.git\objects\4d\00b60199f9ca95cfffc13e5c8f24b08f238ceb" />
+    <Content Include="Assets\.git\objects\4d\e7312d968b927f3774b401a3b2d4951316d79c" />
+    <Content Include="Assets\.git\objects\4f\62d5dc788a246d489d7c0ef1e3a2d12e1ceed3" />
+    <Content Include="Assets\.git\objects\4f\b37b6224720ec2ee926c8932cc4286acfe3624" />
+    <Content Include="Assets\.git\objects\4f\c61a153ffa880ec3483fe00d4bd2300847982c" />
+    <Content Include="Assets\.git\objects\50\9171d4d28b1dbd851a8a84cdb1783ae78eb230" />
+    <Content Include="Assets\.git\objects\50\ed02056bd6310b17b7bb761ea5055bbf2d3656" />
+    <Content Include="Assets\.git\objects\52\01b329e4e1c7bda712a06bb2850f6f874fc6ab" />
+    <Content Include="Assets\.git\objects\52\36ff88d99f1fe33aa45dbbd35517b90920da94" />
+    <Content Include="Assets\.git\objects\52\67d851bfddeccd65eb8e1a71f6d9a372be08e3" />
+    <Content Include="Assets\.git\objects\52\de5050a4bcc9a88b16804df4abbb43a5da155f" />
+    <Content Include="Assets\.git\objects\54\951703459cc042907edc7d2202e706e3b1d01e" />
+    <Content Include="Assets\.git\objects\54\a61e0785d80c7443b042b71da05266618fe02e" />
+    <Content Include="Assets\.git\objects\55\30630ed6709c3665f7fb0a958347806ec41f03" />
+    <Content Include="Assets\.git\objects\55\b022a2d56af373f6e22b346521fe48461734d6" />
+    <Content Include="Assets\.git\objects\56\1191a319e2415a2147412ff2b6ee3d0e501eeb" />
+    <Content Include="Assets\.git\objects\56\f30658c32565628bfb64632a168708298b64b6" />
+    <Content Include="Assets\.git\objects\57\d610f0c1c64ecd9a4db74656b2d8d1e58ade6e" />
+    <Content Include="Assets\.git\objects\58\db3e0fc75fd8326509cc100b46a59b1e13a032" />
+    <Content Include="Assets\.git\objects\59\34e85b62408fc75edc773f84fc4374a97d36d1" />
+    <Content Include="Assets\.git\objects\59\f25a27e6e9b8bca8040b0579f2ddf6b20965f3" />
+    <Content Include="Assets\.git\objects\5a\4ea74b9c36e48684c392c7afa0629b92de0d54" />
+    <Content Include="Assets\.git\objects\5a\60d47c110162f63eb46519e9c419c1a7a99a00" />
+    <Content Include="Assets\.git\objects\5d\158869475d74b47e157d2a61bc8dd837e09f3d" />
+    <Content Include="Assets\.git\objects\5e\22cd05ac9fc8b5aba8a1742cd244995ae29806" />
+    <Content Include="Assets\.git\objects\5f\a6a866294bd7e00949e6670ec4380594c68d58" />
+    <Content Include="Assets\.git\objects\60\142fbf428bf85047ca4362c3ab70393bdc7b60" />
+    <Content Include="Assets\.git\objects\60\8f9e1b0336147699c0675f3162466f505339dd" />
+    <Content Include="Assets\.git\objects\63\375d662f64751790a1d8634e7790cda1745bb2" />
+    <Content Include="Assets\.git\objects\63\eb9904d9caf41f55bab5c16c0f10a2fbd86245" />
+    <Content Include="Assets\.git\objects\66\12e923d691829512ef22a2166a5835fba606e8" />
+    <Content Include="Assets\.git\objects\66\f233a63c988deb5a59dde3bba962082fbdfd57" />
+    <Content Include="Assets\.git\objects\67\348676d7f71c609df351227039b5995a67200b" />
+    <Content Include="Assets\.git\objects\69\6f1d1fa4ef16b3a9c40747f1a4c2915ee58656" />
+    <Content Include="Assets\.git\objects\6c\7a7cdd341adeba2db6dab494abb63af315e8ce" />
+    <Content Include="Assets\.git\objects\6d\12edd9bd474f271dd7e6fd09b7c84ce87bc529" />
+    <Content Include="Assets\.git\objects\6e\e3a3bd5b52860ea3e99fdf8633ad683943245e" />
+    <Content Include="Assets\.git\objects\6f\45f1c409c03209da7fa089c8f636e21d60864a" />
+    <Content Include="Assets\.git\objects\6f\b384ff2b55b4a56f90826c91ffe8485d2300b9" />
+    <Content Include="Assets\.git\objects\70\885b7bbc4eab8d08a4c5957ced78cd56c1af35" />
+    <Content Include="Assets\.git\objects\70\d628ee87609b9be66b270f38b7c39b8cbf44b7" />
+    <Content Include="Assets\.git\objects\71\2bfa2f3e1487057bae58c3c722b3aaef001a58" />
+    <Content Include="Assets\.git\objects\71\33fe1f47c3121ef2089342c23a6708d67d1c3d" />
+    <Content Include="Assets\.git\objects\71\7e97ed38107583d85f914735fdc06222f7316d" />
+    <Content Include="Assets\.git\objects\71\edb0061aea4a3a355d2cc5cdab58a323bc40b3" />
+    <Content Include="Assets\.git\objects\75\baeb713e5fb34e5c949e948e46535ae6cce248" />
+    <Content Include="Assets\.git\objects\79\66bba1e22a62689973b6cb377d97802e2c5bbb" />
+    <Content Include="Assets\.git\objects\79\e91f9c38320257d3325291513d7191258ce5fa" />
+    <Content Include="Assets\.git\objects\7b\37f868f198be0b678dda85a84bc058c247efeb" />
+    <Content Include="Assets\.git\objects\7d\b58d2bfcdf9520f52750dc082555a3f9eff146" />
+    <Content Include="Assets\.git\objects\80\9649075b12ec291a0a2a04b76c6ec17c4afa83" />
+    <Content Include="Assets\.git\objects\80\bd71f61258f9c3001ed8fd1d138256366fff81" />
+    <Content Include="Assets\.git\objects\81\2591bc5e32312505a4cee99d9dcd4289e44349" />
+    <Content Include="Assets\.git\objects\82\3406dc3c74b6f53f1764b7e5c905b57bed27ba" />
+    <Content Include="Assets\.git\objects\82\58273fa57f92393d586a9455e718052797fc1f" />
+    <Content Include="Assets\.git\objects\82\aea42101a65aa34756547fc3dc9dd04f83732c" />
+    <Content Include="Assets\.git\objects\82\b04551a6e54cb2668db6b1280321bce5e8ac0d" />
+    <Content Include="Assets\.git\objects\82\c2ad95a103309a42ba82e5f28ee0a133d0d1ce" />
+    <Content Include="Assets\.git\objects\82\e255ac5706ef44f61703794d3aa33dc16b3722" />
+    <Content Include="Assets\.git\objects\83\48e261c581d1279b3694eaa39a7a06e7ab1441" />
+    <Content Include="Assets\.git\objects\83\848426de6e4304ef28a22695c750a2c160b280" />
+    <Content Include="Assets\.git\objects\84\91652f8809d9b9b359647dc36f8cbc315fdac1" />
+    <Content Include="Assets\.git\objects\84\e7635dc6238206eadbe50d5d960d9d7e88c3ef" />
+    <Content Include="Assets\.git\objects\84\f1d305aaf5287dbdf5baea2ff561ff57e425ec" />
+    <Content Include="Assets\.git\objects\87\10166660c0e21ebd0ed390187052501f74a917" />
+    <Content Include="Assets\.git\objects\88\c4d64b7f7ef50faabf977b168076bb9750da17" />
+    <Content Include="Assets\.git\objects\89\32d1994a88c2c89509d7cf75cd88d7caea1a25" />
+    <Content Include="Assets\.git\objects\8b\39f1f6090faf77f4a6a59fa41f10c20c4d0ca0" />
+    <Content Include="Assets\.git\objects\8b\7df9f76c2c8ddaf8468d9e536bc04da761e63d" />
+    <Content Include="Assets\.git\objects\8d\02206148a527df13e3439bb7df0542ad27a45e" />
+    <Content Include="Assets\.git\objects\8e\a0e9924dc10061f4ad7addea7fb1ea5b079550" />
+    <Content Include="Assets\.git\objects\8f\41363e8e7d21e1a866b4d6dfbaa75ceca3353c" />
+    <Content Include="Assets\.git\objects\91\c23e5fc3c1bc4d0133444462d2eb7e1e8e4b97" />
+    <Content Include="Assets\.git\objects\93\49f3f900ff356a135e0a113e913c54f5548efb" />
+    <Content Include="Assets\.git\objects\93\5cbf58e736a07cd05e77bb58e6db6565d28f7d" />
+    <Content Include="Assets\.git\objects\93\cefbb4dd5e5352e29ae907bfec3da378dff3b8" />
+    <Content Include="Assets\.git\objects\93\e6a64b680bb2fd07c1a0dbeddfb86e6f9210a3" />
+    <Content Include="Assets\.git\objects\95\f501232c471d26d29ab3a50ac0d55d175902b3" />
+    <Content Include="Assets\.git\objects\97\6bde3742e58fc890cf6e389506cf98ad91206d" />
+    <Content Include="Assets\.git\objects\99\1c94cefbb3127428872a29236d16113225e397" />
+    <Content Include="Assets\.git\objects\9a\0791eb20cba8cfff01efbb4e05a419e2a8b5bb" />
+    <Content Include="Assets\.git\objects\9b\2e027f4039b66438ab03e0fcb32fba6b33ac39" />
+    <Content Include="Assets\.git\objects\9b\9566f4b968a5d5325c7ece1f10fee3b5d8e674" />
+    <Content Include="Assets\.git\objects\9b\b8157000196b0e627621e8822b683862929d05" />
+    <Content Include="Assets\.git\objects\9b\d105f165d0f24b16eeb74500bf6fa7d5b1fad9" />
+    <Content Include="Assets\.git\objects\9d\96c46562ef4d943836b4ac5e73dd18f838b288" />
+    <Content Include="Assets\.git\objects\9e\a0c700dcdc75ea06fac625c684c3798261d529" />
+    <Content Include="Assets\.git\objects\9e\cdeeb9be1242dd6a1fb6212b3f30ac3b161a88" />
+    <Content Include="Assets\.git\objects\9f\145c1d30fc5ad43ecf62c19b85af2d138410bb" />
+    <Content Include="Assets\.git\objects\9f\26fde03538350e750a76cf2415a62f960976af" />
+    <Content Include="Assets\.git\objects\9f\fab169f3b3671b128efe6be4ab6dac3e9c581b" />
+    <Content Include="Assets\.git\objects\a0\7671a152c38b508d218e34ea8e2e8c0e9cec96" />
+    <Content Include="Assets\.git\objects\a0\dd1e2af171d2d28b87ec4f648cf6e5bd3fb084" />
+    <Content Include="Assets\.git\objects\a0\fee000cab831c922c9f1f473ccf7025349c2d7" />
+    <Content Include="Assets\.git\objects\a2\27515379c4bd9979039bc0e86ca3626123b96b" />
+    <Content Include="Assets\.git\objects\a3\5ca306ebf15c9469936a2db29624bee88614dc" />
+    <Content Include="Assets\.git\objects\a3\9d365128ae3c09ae3dd8772bdaa5d110bc8105" />
+    <Content Include="Assets\.git\objects\a3\bb0e3bd03ac402be78ab097e49c80a2dfc60ab" />
+    <Content Include="Assets\.git\objects\a6\57a24141cac24910f7608de84019d39fd1a16b" />
+    <Content Include="Assets\.git\objects\aa\202b1fae12619ba476629ebf1f2d4b0b92728a" />
+    <Content Include="Assets\.git\objects\aa\6b21a1f3a6c88ded3fa018c1e71d0c80afff3e" />
+    <Content Include="Assets\.git\objects\ab\e5fcbe14fc6a6c46561cbf4593a120d55d8513" />
+    <Content Include="Assets\.git\objects\ad\05110c5d65d687c1afdb0eb2d62b1c712aaae0" />
+    <Content Include="Assets\.git\objects\ad\550df3b49b5374b82c0266a00a9c6e416b6155" />
+    <Content Include="Assets\.git\objects\af\8b33ea4b0cb51cb1921f5643ce294f0356741e" />
+    <Content Include="Assets\.git\objects\b0\021db2eb69c57367417363c923b65f3cd3235f" />
+    <Content Include="Assets\.git\objects\b2\410e53ac3e59c5b0907c1ac079e4c7bc683f86" />
+    <Content Include="Assets\.git\objects\b2\e2354b126309957e658c9c6bcbb905097bfd4e" />
+    <Content Include="Assets\.git\objects\b3\fcac97edccb9ae15e31cbd7b5729ba0053000e" />
+    <Content Include="Assets\.git\objects\b5\3cbbf56263fa6d1071d802256087dac5065ecb" />
+    <Content Include="Assets\.git\objects\b5\73052c14affa5bdca02ac9e3e7a4168768925b" />
+    <Content Include="Assets\.git\objects\b5\9ccf2e55ec37af9c3bbd71ef70b8c247ee10cf" />
+    <Content Include="Assets\.git\objects\b7\5ebcbca0ceec5d315ec319b7cd1a5907c49f19" />
+    <Content Include="Assets\.git\objects\b8\7a1b00495abc8b00d4c813ec301c22cb320f80" />
+    <Content Include="Assets\.git\objects\b8\832ef728241e0cecb5ae33b7298f5fed1205a7" />
+    <Content Include="Assets\.git\objects\b9\dd48e8dfdacc6104c2cf360ea30bb65970a32b" />
+    <Content Include="Assets\.git\objects\ba\23343d339e7e57be8b0d5c53e4adb923594860" />
+    <Content Include="Assets\.git\objects\ba\6edd996acd2aee4d8d06b8dd3a3fb674a02263" />
+    <Content Include="Assets\.git\objects\bd\9851a69170f8af91c693559057f32f5b094027" />
+    <Content Include="Assets\.git\objects\be\309506903bea488037819734c641b657ef5c48" />
+    <Content Include="Assets\.git\objects\bf\75889a8c05b7878c12b60ac0671bc8e3c0fd02" />
+    <Content Include="Assets\.git\objects\bf\8be9aee97f28439dbc8088ccdec255a4b9a569" />
+    <Content Include="Assets\.git\objects\bf\8dbe73508298dfa6e87b72e3b6b7ca7b007e58" />
+    <Content Include="Assets\.git\objects\c2\48b0c9d74cdbc101197ca6a4c6e0c733064865" />
+    <Content Include="Assets\.git\objects\c2\b5303687e4cd5a100eca88b6237df0a93fdc24" />
+    <Content Include="Assets\.git\objects\c3\76c4ef7e6b12ef980cc0493046ba484d263dce" />
+    <Content Include="Assets\.git\objects\c3\d4be0c58ca1c7896c12ae026905956094c4baf" />
+    <Content Include="Assets\.git\objects\c5\22c06fb908b656fa3296623984090b1fe855f6" />
+    <Content Include="Assets\.git\objects\c6\5aec7512b5411c07c6fb6f1f2266743018c6d9" />
+    <Content Include="Assets\.git\objects\c8\67e7ebb538206ae0918f042080903dceb38a09" />
+    <Content Include="Assets\.git\objects\c8\813e4113b06c041786ab1555f8256adf7a318a" />
+    <Content Include="Assets\.git\objects\c8\d91e27176a9ffe2fe0687e8f16328d2e2f1dd9" />
+    <Content Include="Assets\.git\objects\ca\fac9aa734856ab62fd6d48f060495813577bbb" />
+    <Content Include="Assets\.git\objects\cc\220405afeb0a1ccd1e306f2303770d4b64b54b" />
+    <Content Include="Assets\.git\objects\cd\3a2cf86a516c8064df523e3cb54a7528c4c45a" />
+    <Content Include="Assets\.git\objects\cd\47a4e9fa86d1468055d65fc88146e92bd073c7" />
+    <Content Include="Assets\.git\objects\cd\a26452d76b6950bdab271ff3698a9bd205f707" />
+    <Content Include="Assets\.git\objects\cd\c9864bc81cf4f39a48394bfe9255c6ef8df482" />
+    <Content Include="Assets\.git\objects\cf\4d7ceb1d4fca2424e241c2ced905037ab27e2f" />
+    <Content Include="Assets\.git\objects\cf\9c42783adf8dae64b6097a0ccbd24ece59f8a7" />
+    <Content Include="Assets\.git\objects\d3\362b6fdb19fff6c8d5998ceefdb41c7538eb5c" />
+    <Content Include="Assets\.git\objects\d9\79bfb6a04f689587660bc63d4129a98e831afb" />
+    <Content Include="Assets\.git\objects\db\5a7eb4549ec1406985347113efa74287a2f219" />
+    <Content Include="Assets\.git\objects\dd\43e2376a19ef7242532f843e8271d6aa7e72ba" />
+    <Content Include="Assets\.git\objects\dd\fefb6df9d282eca5ae6a203a26b932af19207d" />
+    <Content Include="Assets\.git\objects\e1\5a77e8d453369a224bd4abfb8493411e718aaf" />
+    <Content Include="Assets\.git\objects\e1\bcc447d332eec92dc3216e676a9cd293b747b1" />
+    <Content Include="Assets\.git\objects\e1\e9aabd808e6d07fb86f1d2f2e2d14652d6ef6e" />
+    <Content Include="Assets\.git\objects\e3\340e90b62d9a0571ee9419bbb3022caa5faa9e" />
+    <Content Include="Assets\.git\objects\e3\f76546b24adfc172f8ced7ac22280181f39f54" />
+    <Content Include="Assets\.git\objects\e9\2522a94d82a571b84ac1de470bcb70b176023c" />
+    <Content Include="Assets\.git\objects\e9\5a4db36ace76169cda75daf7764974d6000db9" />
+    <Content Include="Assets\.git\objects\ec\3ebb8f0e9642d8959c3a6f3d9fb9d768064297" />
+    <Content Include="Assets\.git\objects\ee\6f658087ecbdc2ad234d22f2b74f2b8ebb9068" />
+    <Content Include="Assets\.git\objects\ee\ca0b40de92773d3925c557edb2c6642ff37645" />
+    <Content Include="Assets\.git\objects\f0\b7bdc5512cb88cc940afd86702e563676cbccc" />
+    <Content Include="Assets\.git\objects\f1\1afcd317ae776f1e7050261b72bd0d228f523c" />
+    <Content Include="Assets\.git\objects\f2\0bb9d8569fd3176f210666fa5a1717d69d1b1c" />
+    <Content Include="Assets\.git\objects\f2\97d095c475d053dd93bd479d82132c68693fca" />
+    <Content Include="Assets\.git\objects\f3\2e41e3055e1ca3f474720acc395745f241fc95" />
+    <Content Include="Assets\.git\objects\f3\94b59cf6fc0c5299584f4948dfba2d3f3c9e93" />
+    <Content Include="Assets\.git\objects\f4\1f20108df26be2112c88c606f05a1b2e5a8baa" />
+    <Content Include="Assets\.git\objects\f5\13c1c3c24f6a3de49d37f12692bde7ef83e1fc" />
+    <Content Include="Assets\.git\objects\f5\9576579756074289dea1e648a40e10097a8f74" />
+    <Content Include="Assets\.git\objects\f5\d03fcd59c1fc62db7549347003ae43ff6ec709" />
+    <Content Include="Assets\.git\objects\f6\b7c7dc13790f64eeb1828f53fdc490eda54fd6" />
+    <Content Include="Assets\.git\objects\f7\b7732753a342d363e44ed38e373cd8d07d31ee" />
+    <Content Include="Assets\.git\objects\f8\53821344c96488b541496dbca01b3a4b763379" />
+    <Content Include="Assets\.git\objects\fb\4509643cfffabd1f6dcd96283c6eabd6b1a1f6" />
+    <Content Include="Assets\.git\objects\fb\faabf8d0ebb9223650fbce03a7d3fc986278d1" />
+    <Content Include="Assets\.git\objects\fc\82161e3413142b17c0dd8342b0450a43786957" />
+    <Content Include="Assets\.git\objects\fd\b0103768fe4900839428857a7c8e2997e4610c" />
+    <Content Include="Assets\.git\objects\fe\523d0ee365bb91541276f6dddbd72b72c5a543" />
+    <Content Include="Assets\.git\objects\ff\36eb6b40a8ad577ae61f304cc5f23402d74cef" />
+    <Content Include="Assets\.git\objects\ff\e8e34b07ab43b759c7e7524f4e4ff27399a07d" />
+    <Content Include="Assets\.git\refs\heads\master" />
+    <Content Include="Assets\.git\refs\remotes\origin\master" />
+    <Content Include="Assets\css\bootstrap.min.css.map" />
+    <Content Include="Assets\fonts\icomoon\fonts\icomoon.eot" />
+    <Content Include="Assets\fonts\icomoon\fonts\icomoon.ttf" />
+    <Content Include="Assets\fonts\icomoon\fonts\icomoon.woff" />
+    <Content Include="Assets\fonts\icomoon\selection.json" />
+    <Content Include="Assets\images\.DS_Store" />
+    <Content Include="Assets\scss\.DS_Store" />
+    <Content Include="Assets\scss\bootstrap\.DS_Store" />
+    <Content Include="Assets\scss\bootstrap\bootstrap-grid.scss" />
+    <Content Include="Assets\scss\bootstrap\bootstrap-reboot.scss" />
+    <Content Include="Assets\scss\bootstrap\bootstrap.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_alert.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_badge.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_box-shadow.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_breakpoints.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_caret.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_float.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_forms.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_grid.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_hover.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_image.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_lists.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_resize.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_screen-reader.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_size.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_text-hide.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_text-truncate.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_transition.scss" />
+    <Content Include="Assets\scss\bootstrap\mixins\_visibility.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_align.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_background.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_borders.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_clearfix.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_display.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_embed.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_flex.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_float.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_position.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_screenreaders.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_shadows.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_sizing.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_spacing.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_text.scss" />
+    <Content Include="Assets\scss\bootstrap\utilities\_visibility.scss" />
+    <Content Include="Assets\scss\bootstrap\_alert.scss" />
+    <Content Include="Assets\scss\bootstrap\_badge.scss" />
+    <Content Include="Assets\scss\bootstrap\_breadcrumb.scss" />
+    <Content Include="Assets\scss\bootstrap\_button-group.scss" />
+    <Content Include="Assets\scss\bootstrap\_buttons.scss" />
+    <Content Include="Assets\scss\bootstrap\_card.scss" />
+    <Content Include="Assets\scss\bootstrap\_carousel.scss" />
+    <Content Include="Assets\scss\bootstrap\_close.scss" />
+    <Content Include="Assets\scss\bootstrap\_code.scss" />
+    <Content Include="Assets\scss\bootstrap\_custom-forms.scss" />
+    <Content Include="Assets\scss\bootstrap\_dropdown.scss" />
+    <Content Include="Assets\scss\bootstrap\_forms.scss" />
+    <Content Include="Assets\scss\bootstrap\_functions.scss" />
+    <Content Include="Assets\scss\bootstrap\_grid.scss" />
+    <Content Include="Assets\scss\bootstrap\_images.scss" />
+    <Content Include="Assets\scss\bootstrap\_input-group.scss" />
+    <Content Include="Assets\scss\bootstrap\_jumbotron.scss" />
+    <Content Include="Assets\scss\bootstrap\_list-group.scss" />
+    <Content Include="Assets\scss\bootstrap\_media.scss" />
+    <Content Include="Assets\scss\bootstrap\_mixins.scss" />
+    <Content Include="Assets\scss\bootstrap\_modal.scss" />
+    <Content Include="Assets\scss\bootstrap\_nav.scss" />
+    <Content Include="Assets\scss\bootstrap\_navbar.scss" />
+    <Content Include="Assets\scss\bootstrap\_pagination.scss" />
+    <Content Include="Assets\scss\bootstrap\_popover.scss" />
+    <Content Include="Assets\scss\bootstrap\_print.scss" />
+    <Content Include="Assets\scss\bootstrap\_progress.scss" />
+    <Content Include="Assets\scss\bootstrap\_reboot.scss" />
+    <Content Include="Assets\scss\bootstrap\_root.scss" />
+    <Content Include="Assets\scss\bootstrap\_tables.scss" />
+    <Content Include="Assets\scss\bootstrap\_tooltip.scss" />
+    <Content Include="Assets\scss\bootstrap\_transitions.scss" />
+    <Content Include="Assets\scss\bootstrap\_type.scss" />
+    <Content Include="Assets\scss\bootstrap\_utilities.scss" />
+    <Content Include="Assets\scss\bootstrap\_variables.scss" />
+    <Content Include="Assets\scss\style.scss" />
+    <Content Include="Assets\scss\_site-base.scss" />
+    <Content Include="Assets\scss\_site-blocks.scss" />
+    <Content Include="Assets\scss\_site-navbar.scss" />
+    <Content Include="Assets\webfonts\fa-brands-400.eot" />
+    <Content Include="Assets\webfonts\fa-brands-400.ttf" />
+    <Content Include="Assets\webfonts\fa-brands-400.woff" />
+    <Content Include="Assets\webfonts\fa-brands-400.woff2" />
+    <Content Include="Assets\webfonts\fa-regular-400.eot" />
+    <Content Include="Assets\webfonts\fa-regular-400.ttf" />
+    <Content Include="Assets\webfonts\fa-regular-400.woff" />
+    <Content Include="Assets\webfonts\fa-regular-400.woff2" />
+    <Content Include="Assets\webfonts\fa-solid-900.eot" />
+    <Content Include="Assets\webfonts\fa-solid-900.ttf" />
+    <Content Include="Assets\webfonts\fa-solid-900.woff" />
+    <Content Include="Assets\webfonts\fa-solid-900.woff2" />
+    <EntityDeploy Include="Models\ClinicModel1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ClinicModel1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ClinicModel1.edmx.diagram">
+      <DependentUpon>ClinicModel1.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Products\XemChiTiet.cshtml" />
+    <Content Include="Views\Products\TatCaSanPham.cshtml" />
+    <Content Include="Views\Products\SanPhamView.cshtml" />
+    <Content Include="Views\Products\SanPhamNoiBat.cshtml" />
+    <Content Include="Views\Products\TimKiem.cshtml" />
+    <Content Include="Views\Images\Create.cshtml" />
+    <Content Include="Views\Images\Delete.cshtml" />
+    <Content Include="Views\Images\Details.cshtml" />
+    <Content Include="Views\Images\Edit.cshtml" />
+    <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Products\ProductListPartial.cshtml" />
+    <Content Include="Views\Cart\cart.cshtml" />
+    <Content Include="Views\Contact\Contact.cshtml" />
+    <Content Include="Views\Lecture\Lecture.cshtml" />
+    <Content Include="Views\Lecture\DetailLecture.cshtml" />
+    <Content Include="Views\Shared\_layoutLecture.cshtml" />
+    <Content Include="Views\About\About.cshtml" />
+    <Content Include="Views\Customers\Login.cshtml" />
+    <Content Include="Views\Customers\Register.cshtml" />
+    <Content Include="Views\Shared\Layout_Clinic.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Assets\images\UploadFile\" />
+    <Folder Include="Views\UploadImage\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61071</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44315/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

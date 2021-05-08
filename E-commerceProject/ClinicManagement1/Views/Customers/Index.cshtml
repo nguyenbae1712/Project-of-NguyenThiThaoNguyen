@@ -1,0 +1,340 @@
+﻿@model IEnumerable<ClinicManagement1.Models.Customer>
+@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    ClinicManagementEntities db = new ClinicManagementEntities();
+    int id = 1; /*int.Parse(Request.Cookies["Id"].Value);*/
+    var acc = from e in db.Customers
+              where e.Id == id
+              select e;
+}
+
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="div-img-top">  <img src="~/Assets/images/UploadFile/@acc.FirstOrDefault().Images.FirstOrDefault().FileName" class="img-top" /></div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+                        <ul>
+                            <li class="active">
+                                <a style="margin-left:5px">Account Profile</a>
+                            </li>
+                            <li>
+                                @*<a href="/Customers/Edit">Edit Profile</a>*@
+                                @Html.ActionLink("Edit Customer", "Edit", new { id = item.Id })
+                            </li>
+                            <li>
+                                <a href="#">Log out</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-content">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Username)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Birthday)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Birthday)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Phone)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            @*<div class="col-md-3">
+                    <div class="form-inline">
+                        Tải ảnh lên <input name="picture" id="picture" class="form-control" />
+                        <input type="file" id="fileUpload" accept="images/*" name="fileUpload" style="display:none;" />
+                        <input type="button" id="btnUpload" value="..." />
+                        <hr>
+                    </div>
+                    <img id="pictureUpload" width="300" />
+                    @section upload
+                     {
+                        <script>
+                            $(function () {
+                                //đăng ký sự kiện click nút btnUpload
+                                $('#btnUpload').click(function () {
+                                    $('#fileUpload').trigger('click');
+                                });
+                                //Bắt sự kiện change data của fileUpload
+                                $('#fileUpload').change(function () {
+                                    //kiểm tra trình duyệt có hỗ trợ FormData object không?
+                                    if (window.FormData != undefined) {
+                                        //lấy dữ liệu trên fileUpload
+                                        var fileUpload = $('#fileUpload'.get(0));
+                                        var files = fileUpload.files;
+                                        //tạo đối tượng formdata
+                                        var formData = new FormData();
+                                        //đưa dữ liệu vào form
+                                        formData.append('file', files[0]);
+                                        $.ajax(
+                                            {
+                                                type: 'POST',
+                                                url: '/Home/ProcessUpload',
+                                                contentType: false, //không có header
+                                                processData: false, //không xử lý dữ liệu
+                                                data: formData,
+                                                success: function (urlImage) {
+                                                    $('pictureUpload').attr('src', urlImage);
+                                                    $('picture').val(urlImage);
+
+                                                },
+                                                error: function (err) {
+                                                    alert('Có lỗi khi upload: ' + err.statusText);
+                                                }
+                                            }
+                                        )
+                                    }
+                                })
+                            });
+                        </script>
+                    }
+
+                </div>*@
+            <div class="col-md-3">
+                <div class="profile-ava">
+                    <div class="div-img-right">  <img src="~/Assets/images/UploadFile/@acc.FirstOrDefault().Images.FirstOrDefault().FileName" class="img-right" /></div>
+                    @using (Html.BeginForm("UploadImage", "Customers", FormMethod.Post, new { @class = "row", id = "formUploadImage", enctype = "multipart/form-data" }))
+                    {
+                        <div class="input-group fileupload-v1" style="width:100%">
+                            <input type="file" name="manualfile" class="fileupload-v1-file " accept="image/*" style="border:none;" />
+                            <button type="submit" class="hidden" style="border:1px solid gray;height:33px;border-radius:2px;">Save</button>
+                        </div>
+                    }
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="site-section bg-secondary bg-image" style="background-image: url('/Assets/images/bg_2.jpg');">
+    <div class="container">
+        <div class="row align-items-stretch">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_1.jpg');">
+                    <div class="banner-1-inner align-self-center">
+                        <h2>Pharma Products</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_2.jpg');">
+                    <div class="banner-1-inner ml-auto  align-self-center">
+                        <h2>Rated by Experts</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    dd {
+        padding: 5px;
+        border-color: gray;
+        background-color: lightblue;
+        border-radius: 10px;
+        color: black;
+    }
+
+    body {
+        background: #F1F3FA;
+    }
+
+    /* Profile container */
+    .profile {
+        margin: 20px 0;
+    }
+
+    /* Profile sidebar */
+    .profile-sidebar {
+        padding: 20px 0 10px 0;
+        background: #fff;
+    }
+
+    .profile-userpic img {
+        float: none;
+        margin: 0 auto;
+        width: 50%;
+        height: 50%;
+        -webkit-border-radius: 50% !important;
+        -moz-border-radius: 50% !important;
+        border-radius: 50% !important;
+    }
+
+    .profile-usertitle {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .profile-usertitle-name {
+        color: #5a7391;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .profile-usertitle-job {
+        text-transform: uppercase;
+        color: #5b9bd1;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .profile-userbuttons {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+        .profile-userbuttons .btn {
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 15px;
+            margin-right: 5px;
+        }
+
+            .profile-userbuttons .btn:last-child {
+                margin-right: 0px;
+            }
+
+    .profile-usermenu {
+        margin-top: 30px;
+    }
+
+        .profile-usermenu ul li {
+            border-bottom: 1px solid #f0f4f7;
+            text-transform: uppercase;
+            color: #5b9bd1;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+            .profile-usermenu ul li:last-child {
+                border-bottom: none;
+            }
+
+            .profile-usermenu ul li a {
+                color: #93a3b5;
+                font-size: 14px;
+                font-weight: 400;
+                margin-left: 5px;
+            }
+
+                .profile-usermenu ul li a i {
+                    margin-right: 8px;
+                    font-size: 14px;
+                }
+
+                .profile-usermenu ul li a:hover {
+                    background-color: #fafcfd;
+                    color: #5b9bd1;
+                }
+
+            .profile-usermenu ul li.active {
+                border-bottom: none;
+            }
+
+                .profile-usermenu ul li.active a {
+                    color: #5b9bd1;
+                    background-color: #f6f9fb;
+                    border-left: 2px solid #5b9bd1;
+                    margin-left: -2px;
+                }
+
+    /* Profile Content */
+    .profile-content {
+        padding: 20px;
+        background: #fff;
+        height: auto;
+    }
+
+    .profile-ava {
+        padding: 20px;
+        background: #fff;
+        height: inherit;
+    }
+    .div-img-top {
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 10px auto;
+        height:140px;
+        width:60%;
+    }
+    .img-top{
+        width:100%;
+        height:140px;
+    }
+    .fileupload-v1-file{
+        height:35px;
+        width:85px;
+        margin-left:50px;
+         }
+    .div-img-right{
+        background-color:red;
+        border-radius:50%;
+        overflow:hidden;
+        margin-bottom:10px;
+    }
+    .img-right{
+        width:100%;
+        height:200px;
+        
+    }
+</style>

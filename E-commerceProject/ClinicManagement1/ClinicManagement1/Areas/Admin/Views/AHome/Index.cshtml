@@ -1,0 +1,267 @@
+﻿
+@model IEnumerable<ClinicManagement1.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using ClinicManagement1.Models;
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/content/asset/css/plugins/dropzone.css" />
+}
+@section scripts{
+    <script src="~/content/asset/js/plugins/dropzone.js"></script>
+}
+
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    int id = int.Parse(Request.Cookies["Id"].Value);
+    var acc = from e in db.Employees
+              where e.Id == id
+              select e;
+
+
+}
+
+
+<!-- start: content -->
+@*<div id="content">*@
+<div style="width: 100%; position:relative; text-align:center;">
+    
+    <div style="width: 20%; height: 20%; margin:auto; padding-top:20px; position:relative;">
+        @{
+            if (acc.FirstOrDefault().Images.FirstOrDefault() == null)
+            {
+                <img src="~/content/asset/UploadFile/avatar.jpg" style="width:250px; height:250px; text-align:center;" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" />
+            }
+            else
+            {
+                <img src="@acc.FirstOrDefault().Images.FirstOrDefault().Path" style="width:250px; height:250px; text-align:center;" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" />
+            }
+        }
+
+        <div class="icon-box" data-toggle="modal" data-target="#changeAvatar" style="background-color:#2196F3; opacity:0.8 ; width:65px; height:65px; border-radius:50%; position:absolute; bottom:0; padding-top:5%; cursor:pointer;">
+            <span class="icons icon-camera" style="font-size:300%; color:white;"></span>
+        </div>
+    </div>
+    <div class="panel" style="width: 65%; display:block; overflow:auto; margin:auto; margin-top:20px; background-color:#2196F3; border-radius:20px;">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { style = "width: 100%; padding-left:28%; overflow:auto; padding-bottom:30px;" }))
+        {
+            <div class="form-group" style="width: 100%; margin-top:40px; text-align:left;">
+                <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:white; font-size:150%;">Name</label>
+                <br />
+                <div style="width:65%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Name" style="width:100%;" type="text" class="form-control" disabled></div>
+            </div>
+            <div class="form-group" style="width: 100%; margin-top:40px; text-align:left;">
+                <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:white; font-size:150%;">Email</label>
+                <br />
+                <div style="width:65%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Email" style="width:100%;" type="text" class="form-control" disabled></div>
+            </div>
+            <div class="form-group" style="width: 100%; margin-top:40px; text-align:left;">
+                <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:white; font-size:150%;">Phone</label>
+                <br />
+                <div style="width:65%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Phone" style="width:100%;" type="text" class="form-control" disabled></div>
+            </div>
+            <div class="form-group" style="width: 100%; margin-top:40px; text-align:left;">
+                <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:white; font-size:150%;">Address</label>
+                <br />
+                <div style="width:65%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Address" style="width:100%;" type="text" class="form-control" disabled></div>
+            </div>
+            <div class="form-group" style="width: 100%; margin-top:40px; text-align:left;">
+                <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:white; font-size:150%;">Created Date</label>
+                <br />
+                <div style="width:65%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().CreatedDate" style="width:100%;" type="text" class="form-control" disabled></div>
+            </div>
+            <div class="form-group" style="width: 100%; margin-top:40px; text-align:left;">
+                <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:white; font-size:150%;">Role</label>
+                <br />
+                <div style="width:65%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Role.RoleName" style="width:100%;" type="text" class="form-control" disabled></div>
+            </div>
+            <div class="form-group" style="width: 100%; margin-top:40px; margin-bottom:30px; text-align:left; margin-left:-20%;">
+                <div class="col-md-6" style="margin-top:5px; display:inline-block; height:45px;">
+                    <button class="btn ripple btn-round bg-white" type="button" data-toggle="modal" data-target="#edit">
+                        <div>
+                            <span style="color:#918C8C;">Edit Profile</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="col-md-6" style="margin-top:5px; display:inline-block;">
+                    <button data-toggle="modal" data-target="#changePassword" class="btn ripple btn-outline btn-primary" type="button" style="border-color: white !important; color:white !important; border-radius:24px !important;">
+                        <div>
+                            <span>Change Password</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- modal ChangeAvatar-->
+    <div class="modal fade" id="changeAvatar" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="overflow:auto;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change Avatar</h4>
+                </div>
+                <div class="modal-body" style="overflow:auto;">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading"></div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        @using (Html.BeginForm("changeAva", "AHome", FormMethod.Post, new { @class = "row", id = "formChangeAvatar", enctype = "multipart/form-data" }))
+                                        {
+                                            <div class="input-group fileupload-v1" style="width:100%;">
+
+                                                <input type="file" name="manualfile" class="fileupload-v1-file hidden" accept="image/*" />
+                                                <input type="text" class="form-control fileupload-v1-path" style="display:inline; width:74%;" placeholder="File Path..." disabled>
+                                                <span class="input-group-btn" style="display:inline;">
+                                                    <button class="btn fileupload-v1-btn" type="button"><i class="fa fa-folder"></i> Choose File</button>
+                                                </span>
+                                            </div><!-- /input-group -->
+                                        }
+
+                                    </div><!-- /.col-lg-6 -->
+                                </div><!-- /.row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="formChangeAvatar">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- modal Edit Profile-->
+    <div class="modal fade" id="edit" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="overflow:auto;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Profile</h4>
+                </div>
+                <div class="modal-body" style="overflow:auto;">
+
+                    <form id="formEditProfile" method="post" action="/admin/Home/editProfile">
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="text" name="txtName" class="form-text" required>
+                            <span class="bar"></span>
+                            <label>Name</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="text" name="txtEmail" class="form-text" id="validate_email" required>
+                            <span class="bar"></span>
+                            <label>Email</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="text" name="txtPhone" class="form-text mask-phone_us" required>
+                            <span class="bar"></span>
+                            <label>Phone Number</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="text" name="txtAddress" class="form-text" required>
+                            <span class="bar"></span>
+                            <label>Address</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="formEditProfile">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- modal Change Password-->
+    <div class="modal fade" id="changePassword" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="overflow:auto;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body" style="overflow:auto;">
+
+                    <form id="signupForm" class="cmxform" method="post" action="/admin/Home/changePassword">
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="text" class="form-text" id="validate_username" name="validate_username" required>
+                            <span class="bar"></span>
+                            <label>Username</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="password" class="form-text" id="validate_password" name="validate_password" required>
+                            <span class="bar"></span>
+                            <label>Old Password</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="password" class="form-text" id="validate_password" name="validate_Newpassword" required>
+                            <span class="bar"></span>
+                            <label>New Password</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button data-toggle="modal" data-target="#NotiChangePassword" type="submit" class="btn btn-primary" form="signupForm">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--modal noti change Pass-->
+    @if (TempData["changePass"] != null)
+    {
+        if (TempData["changePass"] == "true")
+        {
+            <div style="position:sticky; bottom:0px; left:5px; width:30%; opacity:0.8;" class="alert alert-success col-md-12 col-sm-12  alert-icon alert-dismissible fade in" role="alert">
+                <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                    <span class="fa fa-check fa-2x"></span>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <p><strong>Success!</strong> Change Password successfully!</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div style="position:sticky; bottom:0px; left:5px; width:30%; opacity:0.8;" class="alert alert-warning col-md-12 col-sm-12 alert-icon alert-dismissible fade in" role="alert">
+                <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                    <span class="fa fa-exclamation-triangle fa-2x"></span>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <p><strong>Warning!</strong> Can not change password! Please check your Username and Old Password.</p>
+                </div>
+            </div>
+        }
+
+    }
+</div>
+
+    @*</div>*@
+    <!-- end: content -->

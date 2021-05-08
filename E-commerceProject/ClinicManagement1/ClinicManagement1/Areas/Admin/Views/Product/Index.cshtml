@@ -1,0 +1,330 @@
+﻿@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/content/asset/css/plugins/datatables.bootstrap.min.css" />
+}
+@section scripts{
+    <script src="~/content/asset/js/plugins/jquery.datatables.min.js"></script>
+    <script src="~/content/asset/js/plugins/datatables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables-example').DataTable();
+        });
+    </script>
+    <script>
+        
+        function getProduct(Id) {
+            $.ajax({
+                url: "/Product/LoadProduct",
+                type: "POST",
+                dataType: 'json',
+                data: { proId: Id },
+                success: function (response) {
+                    if (response.success) {
+                        //convert createddate
+                        var dat = response.createdDate
+                        var yourdate = dat.split("/").reverse();
+                        var tmp = yourdate[2].length==2?yourdate[2]:"0"+yourdate[2];
+                        yourdate[2] = yourdate[1].length==2?yourdate[1]:"0"+yourdate[1];
+                        yourdate[1] = tmp;
+                        yourdate = yourdate.join("-");
+
+                        var a;
+                        //convert wadate
+                        if (response.waDate != "") {
+                            var wa = response.waDate.split(" ").reverse();
+                            var datee = wa[2].split("/").reverse();
+                            var tmpn = datee[2].length==2?datee[2]:"0"+datee[2];
+                            datee[2] = datee[1].length==2?datee[1]:"0"+datee[1];
+                            datee[1] = tmpn;
+                            datee = datee.join("-");
+                            $('.txtwaDate').val(datee);
+                        } 
+                        
+                        $('.txtid').val(response.id);
+                        $('.txtcateName').val(response.cateName);
+                        $('.txtname').val(response.name);
+                        if (response.prIn == null) {
+                            $('.txtprIn').val(0);
+                        }
+                        else {
+                            $('.txtprIn').val(response.prIn);
+                        }
+                        if (response.prOut == null) {
+                            $('.txtprOut').val(0);
+                        }
+                        else {
+                            $('.txtprOut').val(response.prOut);
+                        }
+                        $('.txtdiscount').val(response.discount);
+                        $('.txtcreatedDate').val(yourdate);
+                        if (response.view == null) {
+                            $('.txtview').val(0);
+                        }
+                        else {
+                            $('.txtview').val(response.view);
+                        }
+                        
+                        $('.txtdes').val(response.des);
+                       
+                    }
+                }
+                
+            });
+        }
+
+    </script>
+    
+}
+
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    var listC = from e in db.Products select e;
+}
+
+<!-- panel table-->
+<div class="col-md-12 top-20 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading"><h3>Data Tables</h3></div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Category Name</th>
+                                <th>Product Name</th>
+                                <th>Price in</th>
+                                <th>Price out</th>
+                                <th>Discount</th>
+                                <th>Created Date</th>
+                                <th>Update Date</th>
+                                <th>Warranty Date</th>
+                                <th>View</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in listC)
+                                {
+                                    <tr onclick="getProduct(@item.Id)" style="cursor:pointer;">
+                                        <td>@item.Id</td>
+                                        <td>@item.Category.CategoryName</td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.Price_in</td>
+                                        <td>@item.Price_out</td>
+                                        <td>@item.Discount</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.UpdateDate</td>
+                                        <td>@item.WarrantyDate</td>
+                                        <td>@item.View</td>
+                                        <td>@item.Description</td>
+                                        <td><a href="@Url.Action("Index","Image", new { id = item.Id })" class="btn btn-default"><i class="fa fa-eye"></i> View Image</a></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <!-- panel create-->
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-heading"><h3>Add New Product</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("create", "Product", FormMethod.Post, new { enctype="multipart/form-data"}))
+                    {
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Category Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;">
+                                <select name="txtCateId" class="form-control" style="width:100%;">
+                                    @foreach (var p in db.Categories)
+                                    {
+                                        <option value="@p.Id">@p.CategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Product Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtName" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Price In</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtPriceIn" style="width:100%;" type="number" class="form-control mask-money" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Price Out</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtPriceOut" style="width:100%;" type="number" class="form-control" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Discount</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtDiscount" style="width:100%;" type="number" class="form-control" value="0"></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Warranty Date</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtWaDate" style="width:100%;" type="date" class="form-control" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Description</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtDes" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+
+                        <div class="input-group fileupload-v1" style="width:100%; margin-top:20px; margin-bottom:30px;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Image</label>
+                            <br />
+                            <input type="file" name="manualfile" class="fileupload-v1-file hidden" accept="image/*" required />
+                            <input type="text" class="form-control fileupload-v1-path" style="display:inline; width:82%;" placeholder="File Path..." disabled>
+                            <span class="input-group-btn" style="display:inline;">
+                                <button class="btn fileupload-v1-btn" type="button"><i class="fa fa-folder"></i> Choose File</button>
+                            </span>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:40px; margin-bottom:30px; margin:auto;">
+                            <div style="width:55%; margin-top:5px; height:45px; margin:auto;">
+                                <button class="btn ripple btn-round" style="background-color:#2196F3;" type="submit" data-toggle="modal" data-target="#edit">
+                                    <div>
+                                        <span style="color:white;">Add Product</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- panel delete/update-->
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-heading"><h3>Delete A Product</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("DeleteUpdate", "Product", FormMethod.Post, new { id = "formDelete" }))
+                    {
+                        <input type="number" class="txtid" name="txtId" hidden />
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Category Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtCateName" style="width:100%;" type="text" class="form-control txtcateName" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Product Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtName" style="width:100%;" type="text" class="form-control txtname" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Price In</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtPriceIn" style="width:100%;" type="number" class="form-control txtprIn" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Price Out</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtPriceOut" style="width:100%;" type="number" class="form-control txtprOut" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Discount</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtDiscount" style="width:100%;" type="number" class="form-control txtdiscount"></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Created Date</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtcreatedDate" style="width:100%;" type="date" class="form-control txtcreatedDate" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Warranty Date</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtwaDate" style="width:100%;" type="date" class="form-control txtwaDate" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">View</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtView" style="width:100%;" type="number" class="form-control txtview"></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Description</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtDes" style="width:100%;" type="text" class="form-control txtdes"></div>
+                        </div>
+                    }
+                <div class="form-group" style="width: 100%; margin-top:20px; margin-bottom:30px; text-align:left;">
+                    <div class="col-md-6" style="margin-top:5px; display:inline-block; height:45px;">
+                        <button data-toggle="modal" data-target="#notiDelete" class="btn ripple btn-round" style="background-color:#2196F3;" type="button" data-toggle="modal" data-target="#edit">
+                            <div>
+                                <span style="color:white;">Delete</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-6" style="margin-top:5px; display:inline-block;">
+                        <button name="btnDelUp" value="update" form="formDelete" class="btn ripple btn-outline btn-primary" type="submit" style="border-color: #2196F3 !important; color:white !important; border-radius:24px !important;">
+                            <div>
+                                <span style="color:#2196F3;">Update</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="notiDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h5> Are you sure to delete this product?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="btnDelUp" value="delete" class="btn btn-default" form="formDelete">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

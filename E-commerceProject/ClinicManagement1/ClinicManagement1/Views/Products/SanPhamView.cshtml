@@ -1,0 +1,71 @@
+﻿@*@model List<ClinicManagement1.Models.Product>*@
+@using PagedList.Mvc;
+@model PagedList.IPagedList<ClinicManagement1.Models.Product>
+@{
+    ClinicManagement1.Models.Image image = ViewBag.image;
+}
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-lg-4 text-center item mb-4" data-id="@item.Id">
+            @{ if (@item.Discount != null)
+                {
+                    <span class="tag">Sale</span>
+                }
+            }
+            <div id="gallery" style="width:100%">
+                <a href="/products/xemchitiet/@item.Id">
+                    <img src="@Html.Action("getImage", "images", new { id = item.Id })" alt="Image" style="width:100%; height:400px; padding:20px; ">
+                </a>
+                <h3 class="text-dark"><a href="/products/xemchitiet/@item.Id">@item.ProductName</a></h3>
+            </div>
+            <style>
+                div.gallery {
+                    margin: 5px;
+                    border: 1px solid;
+                    float: left;
+                    width: 180px;
+                }
+                div.gallery img{
+                    width: 100%;
+                    height: auto;
+                    
+                }
+            </style>
+            @{
+                var giacuoi = item.Price_out - item.Discount;
+                @*if (giacuoi > 0)
+                    {
+                        <label class="discount">Giảm @(String.Format("{0:0,0}", item.Discount))</label>
+                    }*@
+            }
+            <div class="text-primary h3">
+                @{ if (item.Discount.GetValueOrDefault(0) != 0)
+                    {
+                        <strong class="text-black">@(String.Format("{0:0,0 vnđ}", giacuoi))</strong>
+                        <p class="price text-black"><span><del> @(String.Format("{0:0,0 vnđ}", item.Price_out))</del></span></p>
+                    }
+                    else
+                    {
+                        <strong class="text-black">@(String.Format("{0:0,0 vnđ}", item.Price_out))</strong>
+                    }
+                }
+            </div>
+        </div>
+    }
+}
+<br />
+<!-- Thêm mã phân trang -->
+<br />
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <div class="site-block-27" style="text-align:center">
+                @Html.PagedListPager(Model, page => Url.Action("TatCaSanPham",
+                    new { page }))
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Kết thúc -->

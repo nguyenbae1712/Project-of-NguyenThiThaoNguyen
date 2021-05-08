@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "thu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model List<ClinicManagement1.Models.Product>
+<body class="">
+
+    <section class="  ">
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <h2 style="font-size:150%">Tìm thấy <strong>@Model.Count()</strong> kết quả:</h2>
+                </div>
+                <ul class="homeproduct">
+                    @Html.Action("SanPhamView", "Products", new { listproducts = Model })
+                </ul>
+            </div>
+        </div>
+    </section>
+    <p id="back-top">
+        <a href="#top" title="Về Đầu Trang"><span></span></a>
+    </p>
+</body>
+

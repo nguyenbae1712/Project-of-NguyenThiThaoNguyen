@@ -1,0 +1,228 @@
+﻿
+@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/content/asset/css/plugins/datatables.bootstrap.min.css" />
+}
+@section scripts{
+    <script src="~/content/asset/js/plugins/jquery.datatables.min.js"></script>
+    <script src="~/content/asset/js/plugins/datatables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables-example').DataTable();
+        });
+    </script>
+    <script>
+        function getEmployee(Id) {
+            $.ajax({
+                url: "/Employee/LoadEmployee",
+                type: "POST",
+                dataType: 'json',
+                data: { EmId: Id },
+                success: function (response) {
+                    if (response.success) {
+                        $('.idEm').val(response.id);
+                        $('.nameEm').val(response.name);
+                    }
+                }
+            });
+        }
+    </script>
+
+}
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    var listE = from e in db.Employees select e;
+    var listR = from e in db.Roles select e;
+}
+<div class="col-md-12 top-20 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading"><h3>Data Tables</h3></div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Created Date</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in listE)
+                                {
+                                    <tr onclick="getEmployee(@item.Id)" style="cursor:pointer;">
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Role.RoleName</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Phone</td>
+                                        <td>@item.Address</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.State</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-12">
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-heading"><h3>Add New Employee</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("create", "Employee", FormMethod.Post))
+                    {
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Role</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;">
+                                <select class="form-control" name="txtRole">
+                                    @foreach (var item in listR)
+                                    {
+                                        <option>@item.RoleName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtName" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Username</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtUsername" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Password</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtPasswork" style="width:100%;" type="password" class="form-control"></div>
+                        </div>
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Email</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtEmail" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; margin-bottom:30px; margin:auto;">
+                            <div style="width:55%; margin-top:5px; height:45px; margin:auto;">
+                                <button class="btn ripple btn-round" style="background-color:#2196F3;" type="submit" data-toggle="modal" data-target="#edit">
+                                    <div>
+                                        <span style="color:white;">Add Employee</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-heading"><h3>Delete An Employee</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("Delete", "Employee", FormMethod.Post, new { id = "formDelete" }))
+                    {
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">ID</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtIdDelete" style="width:100%;" type="text" class="form-control idEm"></div>
+                        </div>
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtIdDelete" style="width:100%;" type="text" class="form-control nameEm"></div>
+                        </div>
+                    }
+                    <div class="form-group" style="width: 100%; margin-top:20px; margin-bottom:30px; text-align:left;">
+                        <div class="col-md-6" style="margin-top:5px; display:inline-block; height:45px;">
+                            <button data-toggle="modal" data-target="#notiDelete" class="btn ripple btn-round" style="background-color:#2196F3;" type="button" data-toggle="modal" data-target="#edit">
+                                <div>
+                                    <span style="color:white;">Delete</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="col-md-6" style="margin-top:5px; display:inline-block;">
+                            <button form="formDelete" name="btnDelete" value="unactive" class="btn ripple btn-outline btn-primary" type="submit" style="border-color: #2196F3 !important; color:white !important; border-radius:24px !important;">
+                                <div>
+                                    <span style="color:#2196F3;">Unactive / Active</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="notiDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h5> Are you sure to delete this employee?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="btnDelete" value="delete" class="btn btn-default" form="formDelete">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--modal noti change Pass-->
+@if (TempData["notiDelete"] != null)
+{
+    if (TempData["notiDelete"] == "true")
+    {
+        <div style="position:sticky; bottom:0px; left:5px; width:30%; opacity:0.8;" class="alert alert-success col-md-12 col-sm-12  alert-icon alert-dismissible fade in" role="alert">
+            <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                <span class="fa fa-check fa-2x"></span>
+            </div>
+            <div class="col-md-10 col-sm-10">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <p><strong>Success!</strong> Successfully!</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="position:sticky; bottom:0px; left:5px; width:30%; opacity:0.8;" class="alert alert-warning col-md-12 col-sm-12 alert-icon alert-dismissible fade in" role="alert">
+            <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                <span class="fa fa-exclamation-triangle fa-2x"></span>
+            </div>
+            <div class="col-md-10 col-sm-10">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <p><strong>Warning!</strong> Failed! Can not find this employee. Please check Id.</p>
+            </div>
+        </div>
+    }
+
+}

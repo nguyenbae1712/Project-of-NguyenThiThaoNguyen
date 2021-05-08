@@ -1,0 +1,94 @@
+﻿@*@model List<ClinicManagement1.Models.Product>*@
+@{
+    ViewBag.Title = "thu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc;
+@model PagedList.IPagedList<ClinicManagement1.Models.Product>
+@{
+    ClinicManagement1.Models.Image image = ViewBag.image;
+}
+<body class="">
+
+    <section class="  ">
+
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0"><a href="/Home/index">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <form id="search-site" action="/products/timkiem/" method="get">
+                            <input class="topinput" id="search-keyword" name="key" type="search" aria-label="Bạn tìm gì..."
+                                   placeholder="Bạn tìm gì..." autocomplete="off" onkeyup="SuggestSearch(event,this, 0);"
+                                   maxlength="50" style="width:200px;" />
+                            <button class="btn btn-primary" type="submit" aria-label="tìm kiếm" style="width:100px;height:50px;border-radius:30px;">Search</button>
+                        </form>
+                    </div>
+                </div>
+                @*<h1 class="h1"><strong> All Products : @Model.Count() sản phẩm</strong></h1>*@
+                <div class="row">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="col-sm-6 col-lg-4 text-center item mb-4" data-id="@item.Id">
+                                @{ if (@item.Discount != null)
+                                    {
+                                        <span class="tag">Sale</span>
+                                    }
+                                }
+                                <a href="/products/xemchitiet/@item.Id">
+
+                                    <img src="@Html.Action("getimage", "images", new { id = item.Id })" alt="Image" style="width:100%; height:400px; padding: 20px;">
+                                </a>
+                                <h3 class="text-dark"><a href="/products/xemchitiet/@item.Id">@item.ProductName</a></h3>
+
+                                @{
+                                    var giacuoi = item.Price_out - item.Discount;
+                                    @*if (giacuoi > 0)
+                                        {
+                                            <label class="discount">Giảm @(String.Format("{0:0,0}", item.Discount))</label>
+                                        }*@
+                                }
+                                <div class="text-primary h3">
+                                    @{ if (item.Discount.GetValueOrDefault(0) != 0)
+                                        {
+                                            <strong class="text-black">@(String.Format("{0:0,0 vnđ}", giacuoi))</strong>
+                                            <p class="price text-black"><span><del> @(String.Format("{0:0,0 vnđ}", item.Price_out))</del></span></p>
+                                        }
+                                        else
+                                        {
+                                            <strong class="text-black">@(String.Format("{0:0,0 vnđ}", item.Price_out))</strong>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<br />
+<!-- Thêm mã phân trang -->
+<br />
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <div class="site-block-27">
+                @Html.PagedListPager(Model, page => Url.Action("ProductList",
+                    new { page }))
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Kết thúc -->

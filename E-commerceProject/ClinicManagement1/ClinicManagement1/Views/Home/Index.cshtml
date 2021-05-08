@@ -1,0 +1,353 @@
+﻿@model List<ClinicManagement1.Models.Product>
+@{
+    List<ClinicManagement1.Models.Product> popularproduct = ViewBag.popularproduct;
+    List<ClinicManagement1.Models.ProductAdvertising> advertising = ViewBag.advertising;
+    List<ClinicManagement1.Models.Product> slideproduct = ViewBag.slideproduct;
+    int dem = 1;
+}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="slide-medicine">
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+
+
+            @foreach (var item in advertising)
+            {
+                <div class="carousel-item @(dem == 1 ? "active" : "")">
+                    <img src="@Html.Action("getimage","images", new { id = item.ProductId , type = "quangcao"})" class="d-block w-100" alt="..." style="width:100%;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="ani-slide-h5" style="font-size:3.5rem;">Fresh ideas for your Health developments</h5>
+                        <h2 class="ani-slide-h2">
+                            Get Better Consulting <br />
+                            Services & Guidance For
+                        </h2>   
+                        <p class="ani-slide-p"style="font-size:4rem;">Medical & Dental Services</p>
+                        <div class="carousel-link-container ani-slide-a">
+                            <a href="@Url.Action("XemChiTiet","Products",new { id = item.ProductId})" style="text-transform:capitalize;padding:10px 30px;">read more</a>
+                        </div>
+                    </div>
+                </div>
+                dem++;
+            }
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <i class="fas fa-angle-left fa-4x"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <i class="fas fa-angle-right fa-4x"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="title-section text-center col-12">
+                <h2 class="text-uppercase">Popular Products</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in popularproduct)
+                {
+                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                        @*<span class="tag">Sale</span>*@
+                        <a href="@Url.Action("XemChiTiet","Products",new { id = item.Id})">
+                        <img src="@Html.Action("getimage","images", new { id = item.Id})" alt="Image" style="width:100%;height:300px;">
+                        </a>
+                        <h3 class="text-dark"><a href="@Url.Action("XemChiTiet","Products",new { id = item.Id})">@item.ProductName</a></h3>
+                        <p class="price text-black"><span>@(String.Format("{0:0,0 vnđ}", item.Price_out))</span></p>
+                    </div>
+                }
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="@Url.Action("ProductList","Products","")" class="btn btn-primary px-4 py-3">View All Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="home-dentistry">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="home-dentistry-left">
+                    <img src="~/Assets/img/tab-1-3.jpg" alt="" class="home-dentistry-left-img" />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="home-dentistry-right">
+                    <div class="home-dentistry-right-top">
+                        <h4><span>Dentistry & Oral Surgery</span></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris exlbs commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                            velit ess eyc fugiat nulla pariatur excepteur sint occaecat cupidatat.
+                        </p>
+                    </div>
+                    <div class="home-dentistry-right-bottom">
+                        <h4><span>Service Main Features</span></h4>
+                        <div class="home-dentistry-right-bottom-text">
+                            <div>
+                                <p>
+                                    <i class="fas fa-check-square" style="color: #ab1c6e; margin-right: 10px;"></i><span>
+                                        Patient
+                                        Experience
+                                    </span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-check-square" style="color: #ab1c6e; margin-right: 10px;"></i><span>
+                                        Infection
+                                        Prevention
+                                    </span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-check-square" style="color: #ab1c6e; margin-right: 10px;"></i><span>
+                                        Quality of Care
+                                        Services
+                                    </span>
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    <i class="fas fa-check-square" style="color: #ab1c6e; margin-right: 10px;"></i><span>
+                                        High-Risk
+                                        Procedures
+                                    </span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-check-square" style="color: #ab1c6e; margin-right: 10px;"></i><span>
+                                        Better Safety
+                                        Measures
+                                    </span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-check-square" style="color: #ab1c6e; margin-right: 10px;"></i><span>
+                                        Standards of
+                                        Treatment
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="title-section text-center col-12">
+                <h2 class="text-uppercase">New Products</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 block-3 products-wrap">
+                <div class="nonloop-block-3 owl-carousel">
+
+                    @foreach (var item in slideproduct)
+                    {
+                        <div class="text-center item mb-4">
+                            <a href="#"> <img src="@Html.Action("getimage","images", new { id = item.Id})" alt="Image"></a>
+                            <h3 class="text-dark"><a href="shop-single.html">@item.ProductName</a></h3>
+                            <p class="price text-black"><span>@(String.Format("{0:0,0 vnđ}", item.Price_out))</span></p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg-blue">
+
+    <div class="blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 blue-container">
+                    <div class=" blue-left">
+                        <h3>Join our Mailing List for Updates</h3>
+                        <p>Stay in Touch and enim ad veniam quis nostrud exercitation ullamco</p>
+                    </div>
+                    <div class=" blue-right ">
+                        <input type="text" value="enter your email">
+                        <button>sign up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="title-section text-center col-12">
+                <h2 class="text-uppercase">Testimonials</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 block-3 products-wrap">
+                <div class="nonloop-block-3 no-direction owl-carousel">
+
+                    <div class="testimony">
+                        <blockquote>
+                            <img src="~/Assets/images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                            <p>
+                                &ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit
+                                quaerat unde.&rdquo;
+                            </p>
+                        </blockquote>
+
+                        <p>&mdash; Kelly Holmes</p>
+                    </div>
+
+                    <div class="testimony">
+                        <blockquote>
+                            <img src="~/Assets/images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                            <p>
+                                &ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit
+                                quaerat unde.&rdquo;
+                            </p>
+                        </blockquote>
+
+                        <p>&mdash; Rebecca Morando</p>
+                    </div>
+
+                    <div class="testimony">
+                        <blockquote>
+                            <img src="~/Assets/images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                            <p>
+                                &ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit
+                                quaerat unde.&rdquo;
+                            </p>
+                        </blockquote>
+
+                        <p>&mdash; Lucas Gallone</p>
+                    </div>
+
+                    <div class="testimony">
+                        <blockquote>
+                            <img src="~/Assets/images/person_4.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                            <p>
+                                &ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit
+                                quaerat unde.&rdquo;
+                            </p>
+                        </blockquote>
+
+                        <p>&mdash; Andrew Neel</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="home-blog">
+    <div class="home-blog-title">
+        <h3>Latest Medical News</h3>
+        <p>
+            Mollit animid acusm est laborum sed dolore perspiciatis unde omnis iste natus error volt sit ipsum dui
+            <br> mque lorem tium ipsum tempor incididunt ut labore et dolore magna aliqua
+        </p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-12">
+                <div class="card">
+                    <img src="~/Assets/img/blog-1-1-1.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p>
+                            <a href="blog-detail.html">By: <span class="violet">admin</span> | March 1,2020</a>
+                        </p>
+                        <hr>
+                        <a href="#">
+                            <h5 class="card-title">
+                                Eiusmod tempor incidids labore sed at dolore magna aliqua
+                            </h5>
+                        </a>
+                        <p class="card-text">psum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore etuy dolore magna sed aduras minim veniam, quis nostrud exercitation ullamco ...</p>
+                        <a href="blog-detail.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-4 col-sm-12 col-12">
+                <div class="card">
+                    <img src="~/Assets/img/blog-1-2-1.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p><a href="#">By: <span class="violet">admin</span> | March 1,2020</a></p>
+                        <hr>
+                        <a href="blog-detail.html">
+                            <h5 class="card-title">
+                                Eiusmod tempor incidids labore sed at dolore magna aliqua
+                            </h5>
+                        </a>
+                        <p class="card-text">psum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore etuy dolore magna sed aduras minim veniam, quis nostrud exercitation ullamco ...</p>
+                        <a href="blog-detail.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-4 col-sm-12 col-12">
+                <div class="card">
+                    <img src="~/Assets/img/blog-1-3-1.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p><a href="#">By: <span class="violet">admin</span> | March 1,2020</a></p>
+                        <hr>
+                        <a href="blog-detail.html">
+                            <h5 class="card-title">
+                                Eiusmod tempor incidids labore sed at dolore magna aliqua
+                            </h5>
+                        </a>
+                        <p class="card-text">psum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore etuy dolore magna sed aduras minim veniam, quis nostrud exercitation ullamco ...</p>
+                        <a href="blog-detail.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section bg-secondary bg-image display-none" style="background-image: url('/Assets/images/bg_2.jpg');">
+    <div class="container">
+        <div class="row align-items-stretch">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_1.jpg');">
+                    <div class="banner-1-inner align-self-center">
+                        <h2>Pharma Products</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_2.jpg');">
+                    <div class="banner-1-inner ml-auto  align-self-center">
+                        <h2>Rated by Experts</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

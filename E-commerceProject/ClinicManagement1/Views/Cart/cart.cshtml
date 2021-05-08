@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<ClinicManagement1.Models.CartItem>
+
+
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0">
+                <a href="/home/index">Home</a> <span class="mx-2 mb-0">/</span>
+                <strong class="text-black">Cart</strong>
+            </div>
+            <div class="col-md-12 mb-0">
+                <strong style="color:red; margin-top:10px;">@ViewBag.cart</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="site-section">
+    <form class="col-md-12" method="post" action="/cart/order">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="site-blocks-table">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Image</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-total">Total</th>
+                                    <th class="product-remove">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <img src="@item._Image" alt="Image" class="img-fluid">
+                                        </td>
+                                        <td class="product-name">
+                                            <h2 class="h3 text-black">@item._ProductName</h2>
+                                        </td>
+                                        <td>@item._Price</td>
+                                        <td>
+                                            <div class="input-group mb-3" style="max-width: 120px;">
+                                                <div class="input-group-prepend">
+                                                    <a class="btn btn-outline-primary js-btn-minus" href="/cart/UpdateAmount/?type=2&id=@(item._IdProduct)">−</a>
+                                                </div>
+                                                <input type="text" class="form-control text-center" value="@item._Amount" style="font-size:15px;">
+                                                <div class="input-group-append">
+                                                    <a class="btn btn-outline-primary js-btn-plus" href="/cart/UpdateAmount/?type=1&id=@(item._IdProduct)">+</a>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td>@item._Total</td>
+                                        <td><a href="/cart/deletecart/@item._IdProduct" class="btn btn-primary height-auto btn-sm">X</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <a class="btn btn-outline-primary btn-md btn-block" href="/home/index">Continue Shopping</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 pl-5">
+                    <div class="row justify-content-end">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-12 text-right border-bottom mb-5">
+                                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                                </div>
+                            </div>
+                            <div class="row mb-5">
+                                <div class="col-md-6">
+                                    <span class="text-black">Total</span>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <strong class="text-black">@Html.Action("total", "cart")</strong>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary btn-lg btn-block" type="submit">
+                                        Checkout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+

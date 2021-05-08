@@ -1,0 +1,140 @@
+﻿@model IEnumerable<ClinicManagement1.Models.Customer>
+@*@model ClinicManagement1.Models.Customer*@
+@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    int id = int.Parse(Request.Cookies["CustomerId"].Value);
+    var acc = from e in db.Customers
+              where e.Id == id
+              select e;
+}
+
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+                <!-- SIDEBAR USERPIC -->
+                <div class="div-img-top">
+                    @{
+                        if (acc.FirstOrDefault().Images.FirstOrDefault() == null)
+                        {
+                            <img src="~/Assets/images/avatar.jpeg" class="img-top"/>
+                        }
+                        else
+                        {
+                            <img src="~/Assets/images/UploadFile/@acc.FirstOrDefault().Images.FirstOrDefault().FileName" class="img-top" />
+                        }
+                    }
+                </div>
+
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        <div style="text-align:center; color: #5b9bd1;">@acc.FirstOrDefault().Name</div>
+                    </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul>
+                        <li class="active">
+                            <a style="margin-left:5px">Account Profile</a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Edit Customer", "Edit", new { id = acc.FirstOrDefault().Id })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Logout", "Logout", "Customers")
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-content">
+                @using (Html.BeginForm(null, "Customers", FormMethod.Post, new { id = acc.FirstOrDefault().Id }))
+                {
+                    <div class="form-group">
+                        <label style="display:inline-block; color:black; font-size:150%;">Name</label>
+                        <br />
+                        <div style="width:100%; display:inline-block"><input placeholder="@acc.FirstOrDefault().Name" style="width:100%; background-color:lightblue; border-radius: 10px; font-size: 20px" type="text" class="form-control" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:inline-block; color:black; font-size:150%;">Username</label>
+                        <br />
+                        <div style="width:100%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Username" style="width:100%;background-color:lightblue; border-radius: 10px; font-size: 20px" type="text" class="form-control" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:inline-block; color:black; font-size:150%;">Email</label>
+                        <br />
+                        <div style="width:100%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Email" style="width:100%;background-color:lightblue; border-radius: 10px; font-size: 20px" type="text" class="form-control" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:inline-block; color:black; font-size:150%;">Birthday</label>
+                        <br />
+                        <div style="width:100%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Birthday" style="width:100%;background-color:lightblue; border-radius: 10px; font-size: 20px" type="text" class="form-control" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:inline-block; color:black; font-size:150%;">Phone</label>
+                        <br />
+                        <div style="width:100%; display:inline-block;"><input placeholder="@acc.FirstOrDefault().Phone" style="width:100%;background-color:lightblue; border-radius: 10px; font-size: 20px" type="text" class="form-control" disabled></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="profile-ava">
+                @{
+                    if (acc.FirstOrDefault().Images.FirstOrDefault() == null)
+                    {
+                        <div class="div-img-right" style="background-color:lightgray;"><img src="~/Assets/images/avatar.jpeg" class="img-right" /></div>
+                    }
+                    else
+                    {
+                        <div class="div-img-right">  <img src="~/Assets/images/UploadFile/@acc.FirstOrDefault().Images.FirstOrDefault().FileName" class="img-right" /></div>
+                    }
+                }
+
+                @using (Html.BeginForm("UploadImage", "Customers", FormMethod.Post, new { @class = "row", id = "formUploadImage", enctype = "multipart/form-data" }))
+                {
+                    <div class="input-group fileupload-v1" style="width:100%">
+                        <input type="file" name="manualfile" class="fileupload-v1-file " accept="image/*" style="border:none; width:43%;" />
+                        <button type="submit" class="hidden" style="border:1px solid gray;height:33px;border-radius:2px;">Save</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="site-section bg-secondary bg-image" style="background-image: url('/Assets/images/bg_2.jpg');">
+    <div class="container">
+        <div class="row align-items-stretch">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_1.jpg');">
+                    <div class="banner-1-inner align-self-center">
+                        <h2>Pharma Products</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_2.jpg');">
+                    <div class="banner-1-inner ml-auto  align-self-center">
+                        <h2>Rated by Experts</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

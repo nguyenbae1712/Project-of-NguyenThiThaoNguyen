@@ -1,0 +1,199 @@
+﻿@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/content/asset/css/plugins/datatables.bootstrap.min.css" />
+}
+@section scripts{
+    <script src="~/content/asset/js/plugins/jquery.datatables.min.js"></script>
+    <script src="~/content/asset/js/plugins/datatables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables-example').DataTable();
+        });
+    </script>
+    <script>
+        function getEmployee(Id) {
+            $.ajax({
+                url: "/Category/LoadCategory",
+                type: "POST",
+                dataType: 'json',
+                data: { CateId: Id },
+                success: function (response) {
+                    if (response.success) {
+                        $('.idCate').val(response.id);
+                        $('.nameCate').val(response.name);
+                        $('.dateCate').val(response.date);
+                        $('.desCate').val(response.des);
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    var listC = from e in db.Categories select e;
+}
+
+<!-- panel table-->
+<div class="col-md-12 top-20 padding-0">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading"><h3>Data Tables</h3></div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Category Name</th>
+                                <th>Created Date</th>
+                                <th>Updated Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in listC)
+                                {
+                                    <tr onclick="getEmployee(@item.Id)" style="cursor:pointer;">
+                                        <td>@item.Id</td>
+                                        <td>@item.CategoryName</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.UpdateDate</td>
+                                        <td>@item.Description</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <!-- panel create-->
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-heading"><h3>Add New Category</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("create", "Category", FormMethod.Post))
+                    {
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Category Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtName" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Description</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtDes" style="width:100%;" type="text" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; margin-bottom:30px; margin:auto;">
+                            <div style="width:55%; margin-top:5px; height:45px; margin:auto;">
+                                <button class="btn ripple btn-round" style="background-color:#2196F3;" type="submit" data-toggle="modal" data-target="#edit">
+                                    <div>
+                                        <span style="color:white;">Add Category</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- panel delete/update-->
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-heading"><h3>Delete A Category</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("DeleteUpdate", "Category", FormMethod.Post, new { id = "formDelete" }))
+                    {
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">ID</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;">
+                                <input name="txtId" style="width:100%;" type="text" class="form-control idCate">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Category Name</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;">
+                                <input name="txtName" style="width:100%;" type="text" class="form-control nameCate">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Created Date</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;">
+                                <input name="txtCreatedDate" style="width:100%;" type="text" class="form-control dateCate">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Description</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;">
+                                <input name="txtDes" style="width:100%;" type="text" class="form-control desCate">
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group" style="width: 100%; margin-top:20px; margin-bottom:30px; text-align:left;">
+                        <div class="col-md-6" style="margin-top:5px; display:inline-block; height:45px;">
+                            <button data-toggle="modal" data-target="#notiDelete" class="btn ripple btn-round" style="background-color:#2196F3;" type="button" data-toggle="modal" data-target="#edit">
+                                <div>
+                                    <span style="color:white;">Delete</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="col-md-6" style="margin-top:5px; display:inline-block;">
+                            <button name="btnDelUp" value="update" form="formDelete" class="btn ripple btn-outline btn-primary" type="submit" style="border-color: #2196F3 !important; color:white !important; border-radius:24px !important;">
+                                <div>
+                                    <span style="color:#2196F3;">Update</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="notiDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h5> Are you sure to delete this employee?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="btnDelUp" value="delete" class="btn btn-default" form="formDelete">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

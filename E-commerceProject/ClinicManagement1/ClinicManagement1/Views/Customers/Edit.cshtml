@@ -1,0 +1,246 @@
+﻿@model ClinicManagement1.Models.Customer
+@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Edit";
+}
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    int id = int.Parse(Request.Cookies["CustomerId"].Value);
+    var acc = from e in db.Customers
+              where e.Id == id
+              select e;
+}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-3">
+
+            <div class="profile-sidebar mt-5">
+                <!-- SIDEBAR USERPIC -->
+                <div class="div-img-top">
+                    @{
+                        if (acc.FirstOrDefault().Images.FirstOrDefault() == null)
+                        {
+                            <img src="~/Assets/images/avatar.jpeg" class="img-top" />
+                        }
+                        else
+                        {
+                            <img src="~/Assets/images/UploadFile/@acc.FirstOrDefault().Images.FirstOrDefault().FileName" class="img-top" />
+                        }
+                    }
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        <div style="text-align:center; color: #5b9bd1;">@acc.FirstOrDefault().Name</div>
+                    </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul>
+                        <li>
+                            @Html.ActionLink("Account Profile", "Index", new { id = Model.Id })
+                        </li>
+                        <li class="active">
+                            <a style="margin-left:5px">Edit Profile</a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Logout", "Logout", "Customers")
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+
+        </div>
+        <div class="col-lg-9">
+            <div class="bg-white-right">
+                @using (Html.BeginForm("Update","Customers", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4 class="h2 mt-5 mb-5 text-black">Edit Profile</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                    <input type="number" name="txtId" value="@Model.Id" hidden />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { name = "txtName", @class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { name = "txtUsername", @class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <label class="control-label col-md-3">Old Password</label>
+                            <div class="col-md-10">
+                                @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                                <input type="password" name="txtOldPass" class="form-control" style="font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <label class="control-label col-md-3">New Password</label>
+                            <div class="col-md-10">
+                                @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                                <input type="password" name="txtNewPass" class="form-control" style="font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { name = "txtEmail",@class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { placeholder = "YYYY-MM-DD", name = "txtBirthday", @class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { name = "txtPhone", @class = "form-control", @style = "font-size:3rem;border-color: gray;background-color: lightblue;border-radius: 10px;color: black;" } })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Edit without changing password" name="btnUpdate" class="btn btn-default" />
+                            </div>
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="ChangePassword" name="btnUpdate" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div>
+        @Html.ActionLink("Back to List", "Index", new { @style = "color: black" });
+    </div>
+    <!-- modal Change Password-->
+    <div class="modal fade" id="changePassword" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="overflow:auto;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body" style="overflow:auto;">
+
+                    <form id="signupForm" class="cmxform" method="post" action="/admin/Home/changePassword">
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="text" class="form-text" id="validate_username" name="validate_username" required>
+                            <span class="bar"></span>
+                            <label>Username</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="password" class="form-text" id="validate_password" name="validate_password" required>
+                            <span class="bar"></span>
+                            <label>Old Password</label>
+                        </div>
+
+                        <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                            <input type="password" class="form-text" id="validate_password" name="validate_Newpassword" required>
+                            <span class="bar"></span>
+                            <label>New Password</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button data-toggle="modal" data-target="#NotiChangePassword" type="submit" class="btn btn-primary" form="signupForm">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--modal noti change Pass-->
+    @if (TempData["changePass"] != null)
+    {
+        if (TempData["changePass"] == "true")
+        {
+            <div style="position:sticky; bottom:0px; left:5px; width:30%; opacity:0.8;" class="alert alert-success col-md-12 col-sm-12  alert-icon alert-dismissible fade in" role="alert">
+                <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                    <span class="fa fa-check fa-2x"></span>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <p><strong>Success!</strong> Change Password successfully!</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div style="position:sticky; bottom:0px; left:5px; width:30%; opacity:0.8;" class="alert alert-warning col-md-12 col-sm-12 alert-icon alert-dismissible fade in" role="alert">
+                <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                    <span class="fa fa-exclamation-triangle fa-2x"></span>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <p><strong>Warning!</strong> Can not change password! Please check your Username and Old Password.</p>
+                </div>
+            </div>
+        }
+
+    }
+</div>
+<div class="site-section bg-secondary bg-image" style="background-image: url('/Assets/images/bg_2.jpg');">
+    <div class="container">
+        <div class="row align-items-stretch">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_1.jpg');">
+                    <div class="banner-1-inner align-self-center">
+                        <h2>Pharma Products</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <a href="#" class="banner-1 h-100 d-flex" style="background-image: url('/Assets/images/bg_2.jpg');">
+                    <div class="banner-1-inner ml-auto  align-self-center">
+                        <h2>Rated by Experts</h2>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ex ad minus rem odio voluptatem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

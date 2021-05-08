@@ -1,0 +1,14 @@
+﻿@using ClinicManagement1.Models
+@model List<Category>
+
+<ul>
+    @{ 
+        foreach (var item in Model)
+        {
+            @*<li><a href="#">@item.Name</a></li>*@
+    <li>
+        @Html.ActionLink(@item.CategoryName, "Index", "Product", new { page = 1, category = item.Id });
+    </li>
+        }
+    }
+</ul>

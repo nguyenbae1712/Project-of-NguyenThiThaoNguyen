@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "thu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<ClinicManagement1.Models.Product>
+@{
+    int categoryid = 1;
+    if (ViewBag.categoryid != null)
+    {
+        categoryid = ViewBag.categoryid;
+    }
+    string categoryname = ViewBag.categoryname;
+
+}
+@{
+    int productid = 1;
+    if (ViewBag.productid != null)
+    {
+        productid = ViewBag.id;
+    }
+    string productname = ViewBag.productname;
+}
+@{
+    string txttimkiem = @ViewBag.txttimkiem;
+}
+<body class="">
+
+    <section class="  ">
+
+
+
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0"><a href="/Home/index">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <form id="search-site" action="/products/timkiem/" method="get">
+                            <input class="topinput" id="search-keyword" name="key" type="search" aria-label="Bạn tìm gì..."
+                                   placeholder="Bạn tìm gì..." autocomplete="off" onkeyup="SuggestSearch(event,this, 0);"
+                                   maxlength="50" style="width:200px;" />
+                            <button class="btn btn-primary" type="submit" aria-label="tìm kiếm" style="width:100px;height:50px;border-radius:30px;">Search</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="filsor">
+                            <button type="button" class="btn btn-primary btn-md dropdown-toggle px-4" id="dropdownMenuReference" data-toggle="dropdown" style="width:100px;height:50px;border-radius:30px;">Price</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                <a class="dropdown-item" href="/products/tatcasanpham/?giatu=0&den=100000&categoryid=@categoryid" style="font-size:3rem;">
+                                    Dưới 100.000
+                                </a>
+                                <a class="dropdown-item" href="/products/tatcasanpham/?giatu=100000&den=300000&categoryid=@categoryid" style="font-size:3rem;">
+                                    Từ 100.000-300.000
+                                </a>
+                                <a class="dropdown-item" href="/products/tatcasanpham/?giatu=300000&den=500000&categoryid=@categoryid" style="font-size:3rem;">
+                                    Từ 300.000-500.000
+                                </a>
+                                <a class="dropdown-item" href="/products/tatcasanpham/?giatu=500000&den=1000000&categoryid=@categoryid" style="font-size:3rem;">
+                                    Từ 500.000-1.000.000
+                                </a>
+                                <a class="dropdown-item" href="/products/tatcasanpham/?giatu=1000000&den=100000000&categoryid=@categoryid" style="font-size:3rem;">
+                                    Trên 1.000.000
+                                </a>
+                            </div>
+                        </div>
+                        <div class="filsor">
+                            <button type="button" class="btn btn-primary btn-md dropdown-toggle px-4" id="dropdownMenuReference" data-toggle="dropdown" style="width:100px;height:50px;border-radius:30px;">Sort</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                <a class="dropdown-item" href="/products/tatcasanpham/?sapxep=1&categoryid=@categoryid" style="font-size:3rem;">Giá thấp đến cao</a>
+                                <a class="dropdown-item" href="/products/tatcasanpham/?sapxep=2&categoryid=@categoryid" style="font-size:3rem;">Giá cao đến thấp</a>
+                            </div>
+                        </div>
+                        <style>
+                            .filsor {
+                                display: inline;
+                            }
+                        </style>
+                    </div>
+                </div>
+
+
+                <div class="choosedfilter">
+                    @if (ViewBag.giatu_luu != null)
+                    {
+
+                        if (@ViewBag.den_luu > 1000000)
+                        {
+                            <a href="/products/tatcasanpham/?reset=3&categoryid=@categoryid">Giá trên @ViewBag.giatu_luu <i class="icontgdd-clearfil"></i></a>
+                        }
+                        else
+                        {
+                            <a href="/products/tatcasanpham/?reset=3&categoryid=@categoryid">Giá từ : @ViewBag.giatu_luu - @ViewBag.den_luu <i class="icontgdd-clearfil"></i></a>
+                        }
+                    }
+                    @if (ViewBag.sapxep_luu != null)
+                    {
+                        <a href="/products/tatcasanpham/?reset=4&categoryid=@categoryid">
+                            @(
+                            ViewBag.sapxep_luu == 1 ? "Giá tăng dần" : ViewBag.sapxep_luu == 2 ? "Giá giảm dần" : ""
+                        )
+                            <i class="icontgdd-clearfil"></i>
+                        </a>
+                    }
+                    @if (ViewBag.giatu_luu != null || ViewBag.sapxep_luu != null)
+                    {
+                        <a class="reset" href="/products/tatcasanpham/?reset=1&categoryid=@categoryid">Xóa tất cả<i class="icontgdd-clearfil"></i></a>
+                    }
+
+
+                </div>
+
+                <h1 class="h1"><strong>@categoryname : @Model.Count() sản phẩm</strong></h1>
+                <!-- Product -->
+                <div class="row">
+                    @{
+                        if (ViewBag.giatu_luu != null || ViewBag.sapxep_luu != null)
+                        {
+                            @Html.Action("SanPhamView", "Products", new { categoryid = categoryid, listproducts = Model })
+                        }
+                        else
+                        {
+                            @*@Html.Action("SanPhamNoiBat", "Products", new { take = 15, categoryid = categoryid })*@
+                            @Html.Action("SanPhamView", "Products", new { take = 20, categoryid = categoryid })
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <p id="back-top">
+        <a href="#top" title="Về Đầu Trang"><span></span></a>
+    </p>
+
+    <!--#endregion -->
+    @*<div id="dlding">Đang xử lý, vui lòng đợi trong giây lát...</div>*@
+</body>

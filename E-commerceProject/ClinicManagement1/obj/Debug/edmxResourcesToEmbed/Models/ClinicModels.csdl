@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ClinicManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="Self.fk_CategoryId" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Birthday" Type="DateTime" Precision="3" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CustomerOpinions" Relationship="Self.FK__CustomerO__Custo__5629CD9C" FromRole="Customer" ToRole="CustomerOpinion" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Custo__4CA06362" FromRole="Customer" ToRole="OrderDetail" />
+    <NavigationProperty Name="Orders" Relationship="Self.fk_CustomerId_order" FromRole="Customer" ToRole="Order" />
+    <NavigationProperty Name="Images" Relationship="ClinicManagementModel.fk_CustomerId" FromRole="Customer" ToRole="Image" />
+  </EntityType>
+  <EntityType Name="CustomerOpinion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__CustomerO__Custo__5629CD9C" FromRole="CustomerOpinion" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="State" Type="Boolean" />
+    <NavigationProperty Name="Lectures" Relationship="Self.FK__Lecture__Employe__534D60F1" FromRole="Employee" ToRole="Lecture" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Emplo__4D94879B" FromRole="Employee" ToRole="OrderDetail" />
+    <NavigationProperty Name="Orders" Relationship="Self.fk_EmployeeId_order" FromRole="Employee" ToRole="Order" />
+    <NavigationProperty Name="Role" Relationship="Self.fk_RoleId" FromRole="Employee" ToRole="Role" />
+    <NavigationProperty Name="Images" Relationship="ClinicManagementModel.fk_EmployeeId" FromRole="Employee" ToRole="Image" />
+  </EntityType>
+  <EntityType Name="Lecture">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Lecture__Employe__534D60F1" FromRole="Lecture" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="State" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.fk_CustomerId_order" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="Employee" Relationship="Self.fk_EmployeeId_order" FromRole="Order" ToRole="Employee" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.fk_OrderId" FromRole="Order" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="Quanity" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Int32" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__OrderDeta__Custo__4CA06362" FromRole="OrderDetail" ToRole="Customer" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__OrderDeta__Emplo__4D94879B" FromRole="OrderDetail" ToRole="Employee" />
+    <NavigationProperty Name="Order" Relationship="Self.fk_OrderId" FromRole="OrderDetail" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="Self.fk_ProductId_OrderDetail" FromRole="OrderDetail" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Price_in" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Price_out" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Discount" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="WarrantyDate" Type="DateTime" Precision="3" />
+    <Property Name="View" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Category" Relationship="Self.fk_CategoryId" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.fk_ProductId_OrderDetail" FromRole="Product" ToRole="OrderDetail" />
+    <NavigationProperty Name="ProductAdvertisings" Relationship="Self.fk_ProductId_ProductAdvertising" FromRole="Product" ToRole="ProductAdvertising" />
+    <NavigationProperty Name="Images" Relationship="ClinicManagementModel.fk_ProductId" FromRole="Product" ToRole="Image" />
+  </EntityType>
+  <EntityType Name="ProductAdvertising">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Product" Relationship="Self.fk_ProductId_ProductAdvertising" FromRole="ProductAdvertising" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employees" Relationship="Self.fk_RoleId" FromRole="Role" ToRole="Employee" />
+  </EntityType>
+  <Association Name="fk_CategoryId">
+    <End Role="Category" Type="Self.Category" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerO__Custo__5629CD9C">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerOpinion" Type="Self.CustomerOpinion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CustomerOpinion">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Custo__4CA06362">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_CustomerId_order">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lecture__Employe__534D60F1">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Lecture" Type="Self.Lecture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lecture">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Emplo__4D94879B">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_EmployeeId_order">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RoleId">
+    <End Role="Role" Type="Self.Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_OrderId">
+    <End Role="Order" Type="Self.Order" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductId_OrderDetail">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductId_ProductAdvertising">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductAdvertising" Type="Self.ProductAdvertising" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductAdvertising">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ClinicManagementEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="CustomerOpinions" EntityType="Self.CustomerOpinion" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Lectures" EntityType="Self.Lecture" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductAdvertisings" EntityType="Self.ProductAdvertising" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <AssociationSet Name="fk_CategoryId" Association="Self.fk_CategoryId">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerO__Custo__5629CD9C" Association="Self.FK__CustomerO__Custo__5629CD9C">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerOpinion" EntitySet="CustomerOpinions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Custo__4CA06362" Association="Self.FK__OrderDeta__Custo__4CA06362">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_CustomerId_order" Association="Self.fk_CustomerId_order">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lecture__Employe__534D60F1" Association="Self.FK__Lecture__Employe__534D60F1">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Lecture" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Emplo__4D94879B" Association="Self.FK__OrderDeta__Emplo__4D94879B">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_EmployeeId_order" Association="Self.fk_EmployeeId_order">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="fk_OrderId" Association="Self.fk_OrderId">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductId_OrderDetail" Association="Self.fk_ProductId_OrderDetail">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductId_ProductAdvertising" Association="Self.fk_ProductId_ProductAdvertising">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductAdvertising" EntitySet="ProductAdvertisings" />
+    </AssociationSet>
+    <EntitySet Name="Images" EntityType="ClinicManagementModel.Image" />
+    <AssociationSet Name="fk_CustomerId" Association="ClinicManagementModel.fk_CustomerId">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Image" EntitySet="Images" />
+    </AssociationSet>
+    <AssociationSet Name="fk_EmployeeId" Association="ClinicManagementModel.fk_EmployeeId">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Image" EntitySet="Images" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductId" Association="ClinicManagementModel.fk_ProductId">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Image" EntitySet="Images" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="ClinicManagementModel.fk_CustomerId" FromRole="Image" ToRole="Customer" />
+    <NavigationProperty Name="Employee" Relationship="ClinicManagementModel.fk_EmployeeId" FromRole="Image" ToRole="Employee" />
+    <NavigationProperty Name="Product" Relationship="ClinicManagementModel.fk_ProductId" FromRole="Image" ToRole="Product" />
+  </EntityType>
+  <Association Name="fk_CustomerId">
+    <End Type="ClinicManagementModel.Customer" Role="Customer" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ClinicManagementModel.Image" Role="Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_EmployeeId">
+    <End Type="ClinicManagementModel.Employee" Role="Employee" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ClinicManagementModel.Image" Role="Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductId">
+    <End Type="ClinicManagementModel.Product" Role="Product" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ClinicManagementModel.Image" Role="Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,200 @@
+﻿@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/content/asset/css/plugins/datatables.bootstrap.min.css" />
+}
+@section scripts{
+    <script src="~/content/asset/js/plugins/jquery.datatables.min.js"></script>
+    <script src="~/content/asset/js/plugins/datatables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables-example').DataTable();
+        })
+    </script>
+    <script>
+        function getOrder(Id) {
+            $.ajax({
+                url: "/Dashboard/LoadOrder",
+                type: "POST",
+                dataType: 'json',
+                data: { OrderId: Id },
+                success: function (response) {
+                    if (response.success) {
+                        var dat = response.CreatedDate
+                        var yourdate = dat.split("/").reverse();
+                        var tmp = yourdate[2].length == 2 ? yourdate[2] : "0" + yourdate[2];
+                        yourdate[2] = yourdate[1].length == 2 ? yourdate[1] : "0" + yourdate[1];
+                        yourdate[1] = tmp;
+                        yourdate = yourdate.join("-");
+
+                        $('.txtEmName').val(response.emName);
+                        $('.txtCusName').val(response.CusName);
+                        $('.txtCreatedDate').val(yourdate);
+                        $('.txtTotal').val(response.total);
+                        $('.txtDes').val(response.des);
+                    }
+                }
+            });
+
+        }
+        function getOrderDetail(Id) {
+            $.ajax({
+                url: "/Dashboard/LoadOrderDetail",
+                type: "POST",
+                dataType: 'json',
+                data: { OrderId: Id },
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                        //alert(response.orderId + response.cookie);
+                        
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    var listO = from e in db.Orders select e;
+    int idOrder = 1;
+    if(Request.Cookies["OrderDetail"].Value != null)
+    {
+        idOrder = int.Parse(Request.Cookies["OrderDetail"].Value);
+    }
+    int price = 0;
+    int quanity = 0;
+    var listP = db.OrderDetails.Where(x => x.OrderId == idOrder).ToList();
+    foreach (var item in listP)
+    {
+        price = decimal.ToInt32(item.Product.Price_out);
+        quanity = item.Quanity;
+        item.Total = price * quanity;
+    }
+
+
+}
+
+<div class="col-md-12 top-20 padding-0">
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-heading"><h3>Order</h3></div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee</th>
+                                <th>Customer</th>
+                                <th>Created Date</th>
+                                <th>Update Date</th>
+                                <th>Description</th>
+                                <th>View Order Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in listO)
+                                {
+                                    <tr onclick="getOrder(@item.Id)" style="cursor:pointer;">
+                                        <td>@item.Id</td>
+                                        <td>@item.Employee.Name</td>
+                                        <td>@item.Customer.Name</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.UpdateDate</td>
+                                        <td>@item.Description</td>
+                                        <td><button onclick="getOrderDetail(@item.Id)" data-toggle="modal" data-target="#notiDelete" type="button" class="btn btn-default"><i class="fa fa-eye"></i> View Detail</button></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-heading"><h3>Order Detail</h3></div>
+            <div class="panel-body">
+                <div>
+
+                    <table class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quanity</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in listP)
+                                {
+                                    <tr style="cursor:pointer;">
+                                        <td>@item.Product.ProductName</td>
+                                        <td>@item.Quanity</td>
+                                        <td>@item.Discount</td>
+                                        <td>@item.Total</td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="notiDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quanity</th>
+                            <th>Discount</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in listP)
+                            {
+                                <tr style="cursor:pointer;">
+                                    <td>@item.Product.ProductName</td>
+                                    <td>@item.Quanity</td>
+                                    <td>@item.Discount</td>
+                                    <td>@item.Total</td>
+                                    
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

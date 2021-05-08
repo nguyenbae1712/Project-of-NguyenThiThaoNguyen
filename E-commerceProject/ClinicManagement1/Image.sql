@@ -1,0 +1,18 @@
+﻿SET IDENTITY_INSERT [dbo].[Image] ON
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (1, 3, NULL, NULL, N'~/Assets/images/', N'polygnax.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (3, 5, NULL, NULL, N'~/Assets/images', N'vitaminH.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (4, 6, NULL, NULL, N'~/Assets/images', N'Eryne.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (5, 7, NULL, NULL, N'~/Assets/images', N'Cataflam.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (6, 8, NULL, NULL, N'~/Assets/images', N'Ameflu.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (7, 9, NULL, NULL, N'~/Assets/images', N'Acyvlovir.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (8, 10, NULL, NULL, N'~/Assets/images', N'Silkron.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (9, 11, NULL, NULL, N'~/Assets/images', N'diclofen.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (10, 12, NULL, NULL, N'~/Assets/images', N'Megyna.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (11, 13, NULL, NULL, N'~/Assets/images', N'Stadexmin.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (12, 14, NULL, NULL, N'~/Assets/images', N'maythooxy.jpg', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (13, 15, NULL, NULL, N'~/Assets/images', N'matnamui.png', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (15, 16, NULL, NULL, N'~/Assets/images', N'ongnghe.png', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (16, 17, NULL, NULL, N'~/Assets/images', N'maydooxy.png', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (17, 19, NULL, NULL, N'~/Assets/images', N'dohuyetap.png', NULL)
+INSERT INTO [dbo].[Image] ([Id], [ProductId], [EmployeeId], [CustomerId], [Path], [FileName], [Type]) VALUES (18, 20, NULL, NULL, N'~/Assets/images', N'suiC', NULL)
+SET IDENTITY_INSERT [dbo].[Image] OFF

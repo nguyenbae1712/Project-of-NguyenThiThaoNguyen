@@ -1,0 +1,166 @@
+﻿@using ClinicManagement1.Models;
+@{
+    ViewBag.Title = "Table";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/content/asset/css/plugins/datatables.bootstrap.min.css" />
+}
+@section scripts{
+    <script src="~/content/asset/js/plugins/jquery.datatables.min.js"></script>
+    <script src="~/content/asset/js/plugins/datatables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables-example').DataTable();
+        })
+    </script>
+    <script>
+        function getLecture(Id) {
+            $.ajax({
+                url: "/ALecture/LoadLecture",
+                type: "POST",
+                dataType: 'json',
+                data: { LectureId: Id },
+                success: function (response) {
+                    if (response.success) {
+                        var dat = response.CDate;
+                        var yourdate = dat.split("/").reverse();
+                        var tmp = yourdate[2].length == 2 ? yourdate[2] : "0" + yourdate[2];
+                        yourdate[2] = yourdate[1].length == 2 ? yourdate[1] : "0" + yourdate[1];
+                        yourdate[1] = tmp;
+                        yourdate = yourdate.join("-");
+
+
+                        $('.Id').val(response.LId);
+                        $('.Title').val(response.LTitle);
+                        $('.Subject').val(response.LSubject);
+                        $('.Content').val(response.LContent);
+                        $('.CreatedDate').val(yourdate);
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+@{
+    ClinicManagementEntities2 db = new ClinicManagementEntities2();
+    var listL = from e in db.Lectures select e;
+    var listC = from e in db.Products select e;
+}
+
+<div class="col-md-12 top-20 padding-0">
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-heading"><h3>Order</h3></div>
+            <div class="panel-body">
+                <div class="responsive-table">
+                    <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee Name</th>
+                                <th>Title</th>
+                                <th>Subject</th>
+                                <th>Content</th>
+                                <th>Created Date</th>
+                                <th>Update Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in listL)
+                                {
+                                    <tr onclick="getLecture(@item.Id)" style="cursor:pointer;">
+                                        <td>@item.Id</td>
+                                        <td>@item.Employee.Name</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.Subject</td>
+                                        <td>@item.Content</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.UpdateDate</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-heading"><h3>Delete or update a lecture</h3></div>
+            <div class="panel-body">
+                <div>
+                    @using (Html.BeginForm("DeleteUpdate", "ALecture", FormMethod.Post, new { id = "formDelete" }))
+                    {
+                        <input type="number" class="Id" name="txtId" hidden />
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:10px; display:inline-block; color:#918C8C; font-size:150%;">Title</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtTitle" style="width:100%;" type="text" class="form-control Title" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Subject</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtSubject" style="width:100%;" type="text" class="form-control Subject" required></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Content</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><textarea name="txtContent" style="width:100%;" type="text" class="form-control Content" required></textarea></div>
+                        </div>
+
+                        <div class="form-group" style="width: 100%; margin-top:20px; text-align:left;">
+                            <label class="control-label text-right" style="margin-right:20px; display:inline-block; color:#918C8C; font-size:150%;">Created Date</label>
+                            <br />
+                            <div style="width:100%; display:inline-block;"><input name="txtCreatedDate" style="width:100%;" type="date" class="form-control CreatedDate" required></div>
+                        </div>
+
+                    }
+                    <div class="form-group" style="width: 100%; margin-top:20px; margin-bottom:30px; text-align:left;">
+                        <div class="col-md-6" style="margin-top:5px; display:inline-block; height:45px;">
+                            <button data-toggle="modal" data-target="#notiDelete" class="btn ripple btn-round" style="background-color:#2196F3;" type="button" data-toggle="modal" data-target="#edit">
+                                <div>
+                                    <span style="color:white;">Delete</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="col-md-6" style="margin-top:5px; display:inline-block;">
+                            <button name="btnDelUp" value="update" form="formDelete" class="btn ripple btn-outline btn-primary" type="submit" style="border-color: #2196F3 !important; color:white !important; border-radius:24px !important;">
+                                <div>
+                                    <span style="color:#2196F3;">Update</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="notiDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h5> Are you sure to delete this lecture?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="btnDelUp" value="delete" class="btn btn-default" form="formDelete">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
